@@ -1,0 +1,4 @@
+body { padding: 10px; }
+.help-inline { margin-bottom: 9px; }
+.error { border: dashed red 1px }
+.success { border: dotted  green 1px }

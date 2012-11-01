@@ -1,0 +1,19 @@
+<!doctype html>
+<html ng-app="myApp" >
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 8 - hidden empty select option</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  <label>Select a letter (custom empty option)</label>
+  <select ng-model="letter" ng-options="letter for letter in letters">
+    <option style="display:none" value=""></option>
+  </select>
+  Selected Letter: {{ letter }} ({{ getType(letter) }})
+</body>
+</html>

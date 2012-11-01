@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app="myApp" >
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 8 - complex select directive object based examples</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  <label>Select a country code by country name, ordered by country code</label>
+  <select ng-model="chosenCountryCode" ng-options="code as name for (code, name) in countriesByCode"></select>
+  Selected Country Code: {{ chosenCountryCode }}
+  
+  <label>Select a country code by country name, ordered by country name</label>
+  <select ng-model="chosenCountryCode" ng-options="code as name for (name, code) in countriesByName"></select>
+  Selected Country Code: {{ chosenCountryCode }}
+
+</body>
+</html>
