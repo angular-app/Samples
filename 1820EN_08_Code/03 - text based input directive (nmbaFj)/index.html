@@ -1,0 +1,16 @@
+<!doctype html>
+<html ng-app>
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 8 - Text based input directive</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <script src="app.js"></script>
+</head>
+<body>
+  <label>Password (must be between 3 and 10 characters, and contain at least one numeral and one alphabetic character)</label>
+  <input type="password" ng-model="user.password" ng-minlength="3" ng-maxlength="10" ng-pattern="/^.*(?=.*\d)(?=.*[a-zA-Z]).*$/">
+  <pre ng-bind="user | json"></pre>
+</body>
+</html>

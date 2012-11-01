@@ -1,0 +1,17 @@
+<!doctype html>
+<html ng-app>
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS Plunker</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<body>
+  <h1>User Info</h1>
+  <label>Roles</label>
+  <label class="checkbox"><input type="checkbox" ng-model="user.role" ng-true-value="admin" ng-false-value="basic"> Is Administrator</label>
+  
+  <pre ng-bind="user | json"></pre>
+</body>
+</html>
