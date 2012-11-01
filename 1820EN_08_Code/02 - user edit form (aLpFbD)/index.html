@@ -1,0 +1,31 @@
+<!doctype html>
+<html ng-app >
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 8 - User Edit Form</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<body>
+  <h1>User Info</h1>
+  <label>E-mail</label>
+  <input type="email" ng-model="user.email">
+  <label>Last name</label>
+  <input type="text" ng-model="user.lastName">
+  <label>First name</label>
+  <input type="text" ng-model="user.firstName">
+  <label>Website</label>
+  <input type="url" ng-model="user.website">
+  <label>Description</label>
+  <textarea ng-model="user.description"></textarea>
+  <label>Password</label>
+  <input type="password" ng-model="user.password">
+  <label>Password (repeat)</label>
+  <input type="password" ng-model="repeatPassword">
+  <label>Roles</label>
+  <label class="checkbox"><input type="checkbox" ng-model="user.admin"> Is Administrator</label>
+  
+  <pre ng-bind="user | json"></pre>
+</body>
+</html>
