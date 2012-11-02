@@ -1,0 +1,4 @@
+body { padding: 10px; }
+
+.ng-valid.ng-dirty { border: solid green 3px; }
+.ng-invalid.ng-dirty { border: solid red 3px; }

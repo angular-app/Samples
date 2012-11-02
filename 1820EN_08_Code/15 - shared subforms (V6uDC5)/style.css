@@ -1,0 +1,17 @@
+ng-form {
+  display: block;
+  border: solid 2px blue;
+  padding: 10px;
+  margin: 15px 10px;
+}
+  
+form {
+  border: solid 2px green;
+  padding: 5px;
+  margin: 10px;
+}
+
+button {
+  margin-top: 5px;
+  display: block;
+}

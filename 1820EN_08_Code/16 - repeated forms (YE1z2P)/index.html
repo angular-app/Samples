@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app="myApp" >
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 8 - repeated forms</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  <h1>User Info</h1>
+  <label>Websites</label>
+  <div class="input-append" ng-repeat="website in user.websites">
+    <input type="url" ng-model="website.url"><button class="btn" ng-click="remove($index)">X</button>
+  </div>
+  <button class="btn btn-small" ng-click="add()">Add Website</button>
+
+  <pre ng-bind="user | json"></pre>
+</body>
+</html>

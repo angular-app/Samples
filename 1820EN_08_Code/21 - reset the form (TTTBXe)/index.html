@@ -1,0 +1,45 @@
+<!doctype html>
+<html ng-app="myApp" >
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 8 - reset the form</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  <h1>User Info</h1>
+  <form name="userInfoForm">
+    <label>E-mail</label>
+    <input class="span6" type="email" name="email" ng-model="user.email" required unique-email>
+    <span ng-show="showError('email', 'required')" class="help-inline">This field is required.</span>
+    <span ng-show="showError('email', 'email')" class="help-inline">Please enter a valid email address.</span>
+    <span ng-show="showError('email', 'uniqueEmail')" class="help-inline">This email address is not available - please enter another.</span>
+    <label>Last name</label>
+    <input class="span6" type="text" name="lastName" ng-model="user.lastName" required>
+    <span ng-show="showError('lastName', 'required')" class="help-inline">This field is required.</span>
+    <label>First name</label>
+    <input class="span6" type="text" name="firstName" ng-model="user.firstName" required>
+    <span ng-show="showError('firstName', 'required')" class="help-inline">This field is required.</span>
+    <label>Password</label>
+    <input class="span6" type="password" name="password" ng-model="user.password" required>
+    <span ng-show="showError('password', 'required')" class="help-inline">This field is required.</span>
+    <span ng-show="showError('passwordRepeat', 'equal')" class="help-inline">Passwords do not match.</span>
+    <label>Password (repeat)</label>
+    <input class="span6" type="password" name="passwordRepeat" ng-model="passwordRepeat" required>
+    <span ng-show="showError('passwordRepeat', 'required')" class="help-inline">This field is required.</span>
+    <span ng-show="showError('passwordRepeat', 'equal')" class="help-inline">Passwords do not match.</span>
+    <label>Roles</label>
+    <input type="checkbox" ng-model="user.admin"><span class="help-inline">Admin</span>
+    <hr>
+    <button ng-click="save()" ng-disabled="!canSave()">Save</button>
+    <button ng-click="revert()" ng-disabled="!canRevert()">Revert Changes</button>
+  </form>
+
+  User Model: <pre ng-bind="toJSON(user)"></pre>
+  Form: <pre ng-bind="toJSON(userInfoForm)"></pre>
+  
+</body>
+</html>

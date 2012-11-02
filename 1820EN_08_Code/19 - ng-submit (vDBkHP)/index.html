@@ -1,0 +1,16 @@
+<!doctype html>
+<html ng-app="myApp" >
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 8 - ng-submit</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <script src="app.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  <form ng-submit="alert(q)">
+    <input ng-model="q">
+  </form>
+</body>
+</html>

@@ -1,0 +1,10 @@
+body { padding: 10px; }
+
+input.ng-invalid {
+  background-color: red;
+}
+
+input.ng-dirty.ng-valid {
+  border: solid 2px green;
+}
+

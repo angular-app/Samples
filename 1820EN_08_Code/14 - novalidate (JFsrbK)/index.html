@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app >
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 8 - novalidate</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<body ng-init="x=4; y=4">
+  <h1>With novalidate - clicking submit will be valid</h1>
+  <form name="novalidateForm" novalidate>
+    <input type="number" ng-model="x" name="x" step="5">
+    <input type="submit">
+  </form>
+  <h1>Without novalidate - clicking submit will be invalid</h1>
+  <form name="validateForm">
+    <input type="number" ng-model="y" name="y" step="5">
+    <input type="submit">
+  </form>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="myApp" >
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 8 - validating repeated forms</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body>
+<h1>User Info</h1>
+<form novalidate ng-controller="MainCtrl" name="userForm">
+  <label>Websites</label>
+  <div ng-show="userForm.$invalid">The User Form is invalid.</div>
+  <div class="control-group" ng-repeat="website in user.websites" ng-form="websiteForm">
+    <span class="input-append">
+      <input type="url" name="website" ng-model="website.url" required>
+      <button class="btn" ng-click="remove($index)">X</button>
+    </span>
+    <span ng-show="showError(websiteForm.website, 'url')" class="help-inline">You must enter a valid url (including http://)</span>
+    <span ng-show="showError(websiteForm.website, 'required')" class="help-inline">This field is required</span>
+  </div>
+  <button class="btn btn-small" ng-click="add()">Add Website</button>
+  <pre ng-bind="user | json"></pre>
+</form>
+</body>
+</html>

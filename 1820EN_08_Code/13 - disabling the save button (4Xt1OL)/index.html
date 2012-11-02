@@ -1,0 +1,38 @@
+<!doctype html>
+<html ng-app="myApp" >
+<head>
+  <meta charset="utf-8">
+  <title>Chapter 8 - disabling the save button</title>
+  <script>document.write("<base href=\"" + document.location + "\" />");</script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
+</head>
+<body ng-controller="MainCtrl">
+  <h1>User Info</h1>
+  <form name="userInfoForm">
+  <label>E-mail</label>
+  <input type="email" ng-model="user.email" name="email">
+  <label>Last name</label>
+  <input type="text" ng-model="user.lastName" name="lastName">
+  <label>First name</label>
+  <input type="text" ng-model="user.firstName" name="firstName">
+  <label>Website</label>
+  <input type="url" ng-model="user.website" name="website">
+  <label>Description</label>
+  <textarea ng-model="user.description" name="description"></textarea>
+  <label>Password</label>
+  <input type="password" ng-model="user.password" name="password">
+  <label>Password (repeat)</label>
+  <input type="password" ng-model="repeatPassword" name="repeatPassword">
+  <label>Roles</label>
+  <label class="checkbox"><input type="checkbox" ng-model="user.admin" name="admin"> Is Administrator</label>
+  <button ng-click="save()" ng-disabled="!canSave()">Save</button>
+  </form>
+
+  User Model: <pre ng-bind="toJSON(user)"></pre>
+  Form: <pre ng-bind="toJSON(userInfoForm)"></pre>
+  
+</body>
+</html>
