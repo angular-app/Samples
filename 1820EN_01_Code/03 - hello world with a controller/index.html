@@ -1,0 +1,16 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script type="text/javascript">
+        var HelloCtrl = function ($scope) {
+            $scope.name = 'World';
+        }
+    </script>
+</head>
+<body ng-app>
+<div ng-controller="HelloCtrl">
+    Say hello to: <input type="text" ng-model="name"><br>
+    <h1>Hello, {{name}}!</h1>
+</div>
+</body>
+</html>

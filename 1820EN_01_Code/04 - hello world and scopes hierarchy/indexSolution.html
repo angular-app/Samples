@@ -1,0 +1,21 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script type="text/javascript">
+
+        var AppCtrl = function ($scope) {
+            $scope.named = {name : 'World'};
+        };
+
+        var HelloCtrl = function ($scope) {
+        };
+    </script>
+</head>
+<body ng-app ng-controller="AppCtrl">
+<h1>Application-wide name: {{named.name}}</h1>
+<div ng-controller="HelloCtrl">
+    Say hello to: <input type="text" ng-model="named.name"><br>
+    <h2>Hello, {{named.name}}!</h2>
+</div>
+</body>
+</html>
