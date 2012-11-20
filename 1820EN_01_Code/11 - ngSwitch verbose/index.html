@@ -1,0 +1,16 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</head>
+
+<body ng-app ng-controller="VerboseCtrl">
+<pre>{{items | json}}</pre>
+<button ng-click="items.length=0">Remove all items</button>
+<hr>
+<div ng-switch on="items.length>0">
+    <span ng-switch-when="true">There are {{items.length}} items in the list.</span>
+    <span ng-switch-when="false">There are no items in the list.</span>
+</div>
+</body>
+</html>

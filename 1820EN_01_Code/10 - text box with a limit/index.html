@@ -1,0 +1,26 @@
+<html>
+<head>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body ng-app>
+<div class="well">
+    <div class="container" ng-controller="TextAreaWithLimitCtrl">
+        <div class="row">
+            <span ng-class="{'text-warning' : shouldWarn()}">
+                Remaining: {{remaining()}}
+            </span>
+        </div>
+        <div class="row">
+            <textarea ng-model="message">{{message}}</textarea>
+        </div>
+        <div class="row">
+            <button class="btn btn-primary" ng-disabled="!hasValidLength()" ng-click="send()">Send</button>
+            <button class="btn btn-warning" ng-click="clear()">Clear</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

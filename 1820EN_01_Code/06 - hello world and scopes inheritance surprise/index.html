@@ -1,21 +1,19 @@
 <html>
 <head>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
     <script type="text/javascript">
-
-        var AppCtrl = function ($scope) {
-          $scope.name = 'World';
-        };
-
         var HelloCtrl = function ($scope) {
         };
     </script>
 </head>
-<body ng-app ng-controller="AppCtrl">
-<h1>Application-wide name: {{name}}</h1>
+
+<body ng-app ng-init="name='World'">
+<h1>Hello, {{name}}</h1>
 <div ng-controller="HelloCtrl">
-    Say hello to: <input type="text" ng-model="name"><br>
+    Say hello to: <input type="text" ng-model="name">
     <h2>Hello, {{name}}!</h2>
 </div>
 </body>
+
 </html>
