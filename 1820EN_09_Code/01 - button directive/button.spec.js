@@ -14,4 +14,12 @@ describe('button directive', function () {
       expect(element.text()).toBe('Click Me!');
     });
   });
+
+  it('adds type and size classes accordingly', function() {
+    inject(function($compile, $rootScope) {
+      var element = $compile('<button type="primary" size="large">Click Me!</button>')($rootScope);
+      expect(element.hasClass('btn-primary')).toBe(true);
+      expect(element.hasClass('btn-large')).toBe(true);
+    });
+  });
 });
