@@ -4,28 +4,18 @@ angular.module('directives.validate-equals', [])
   return {
     restrict: 'A',
     require: 'ngModel',
-    link: function(scope, elm, attrs, ctrl) {
-
-      function validateEqual(myValue, otherValue) {
-        if (myValue === otherValue) {
-          ctrl.$setValidity('equal', true);
-          return myValue;
-        } else {
-          ctrl.$setValidity('equal', false);
-          return undefined;
-        }
+    link: function(scope, element, attrs, ngModelCtrl) {
+      function validateEqual(myValue) {
+        var valid = (myValue === scope.$eval(attrs.validateEquals));
+        ngModelCtrl.$setValidity('equal', valid);
+        return valid ? myValue : undefined;
       }
 
-      scope.$watch(attrs.validateEquals, function(otherModelValue) {
-        ctrl.$setValidity('equal', ctrl.$viewValue === otherModelValue);
-      });
+      ngModelCtrl.$parsers.push(validateEqual);
+      ngModelCtrl.$formatters.push(validateEqual);
 
-      ctrl.$parsers.push(function(viewValue) {
-        return validateEqual(viewValue, scope.$eval(attrs.validateEquals));
-      });
-
-      ctrl.$formatters.push(function(modelValue) {
-        return validateEqual(modelValue, scope.$eval(attrs.validateEquals));
+      scope.$watch(attrs.validateEquals, function() {
+        ngModelCtrl.$setViewValue(ngModelCtrl.$viewValue);
       });
     }
   };

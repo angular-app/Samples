@@ -1,0 +1,19 @@
+<!doctype html>
+<html ng-app="directives.date-picker">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS Book - Chapter 9 - validateEquals Directive</title>
+  <script src="../../lib/jquery-ui-1.9.2.custom/js/jquery-1.8.3.js"></script>
+  <script src="../../lib/jquery-ui-1.9.2.custom/js/jquery-ui-1.9.2.custom.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../lib/jquery-ui-1.9.2.custom/css/ui-lightness/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+  <script src="date-picker.js"></script>
+</head>
+<body>
+  <form name="dateForm">
+    <input date-picker ng-model="aDate">
+    {{ aDate }}
+  </form>
+</body>
+</html>
