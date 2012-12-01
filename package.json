@@ -1,0 +1,16 @@
+{
+  "name": "angular-app-samples",
+  "version": "0.0.0",
+  "description": "Angular Book Samples",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.3.17"    
+    },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angular-app/Samples.git"
+  },
+  "author": "Pawel Kozlowski and Peter Bacon Darwin",
+  "license": "MIT"
+}
