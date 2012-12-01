@@ -1,4 +1,4 @@
-angular.module('directives.unique-email', [])
+angular.module('directives', [])
 
 /**
  * A validation directive to ensure that the model contains a unique email address

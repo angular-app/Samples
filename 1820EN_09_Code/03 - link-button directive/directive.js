@@ -1,4 +1,4 @@
-angular.module('directives.linkButton', [])
+angular.module('directives', [])
 
 .directive('linkButton', function() {
   return {

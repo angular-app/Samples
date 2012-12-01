@@ -1,7 +1,7 @@
 describe('uniqueEmail directive', function() {
   var $scope, testInput, Users;
 
-  beforeEach(module('directives.unique-email'));
+  beforeEach(module('directives'));
   beforeEach(module('mock.Users'));
 
   beforeEach(inject(function($compile, $rootScope, _Users_){

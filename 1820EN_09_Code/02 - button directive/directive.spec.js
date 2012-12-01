@@ -1,6 +1,6 @@
 describe('button directive', function () {
   var $compile, $rootScope;
-  beforeEach(module('directives.button'));
+  beforeEach(module('directives'));
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
