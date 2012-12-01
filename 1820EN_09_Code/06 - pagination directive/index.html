@@ -9,8 +9,8 @@
 </head>
 <body ng-init="currentPage=3; numPages=5; selectCount=0">
   <pagination num-pages="numPages" current-page="currentPage" on-select-page="selectCount=selectCount+1"></pagination>
-  <div>Number of Pages: <input ng-model="numPages"></div>
-  <div>Current Page: <input ng-model="currentPage"></div>
+  <div>Number of Pages: <input ng-model="numPages" type="number"></div>
+  <div>Current Page: <input ng-model="currentPage"  type="number"></div>
   <div>Count of Page Selections: {{selectCount}}</div>
 </body>
 </html>

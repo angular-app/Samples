@@ -92,4 +92,23 @@ describe('pagination directive', function () {
     $rootScope.$digest();
     expect($rootScope.selectPageHandler).toHaveBeenCalledWith(2);
   });
+
+  it('changes the number of items when numPages changes', function() {
+    $rootScope.numPages = 8;
+    $rootScope.$digest();
+    expect(element.find('li').length).toBe(10);
+    expect(element.find('li').eq(0).text()).toBe('Previous');
+    expect(element.find('li').eq(-1).text()).toBe('Next');
+  });
+
+  it('sets the current page to the last page if the numPages is changed to less than the current page', function() {
+    $rootScope.selectPageHandler = jasmine.createSpy('selectPageHandler');
+    element = $compile('<pagination num-pages="numPages" current-page="currentPage" on-select-page="selectPageHandler(page)"></pagination>')($rootScope);
+    $rootScope.$digest();
+    $rootScope.numPages = 2;
+    $rootScope.$digest();
+    expect(element.find('li').length).toBe(4);
+    expect($rootScope.currentPage).toBe(2);
+    expect($rootScope.selectPageHandler).toHaveBeenCalledWith(2);
+  });
 });
