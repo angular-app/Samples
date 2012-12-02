@@ -29,23 +29,26 @@ describe('pagination directive', function () {
   });
 
   it('sets the current-page to be active', function() {
-    expect(element.find('li').eq(3).hasClass('active')).toBe(true);
+    var currentPageItem = element.find('li').eq($rootScope.currentPage);
+    expect(currentPageItem.hasClass('active')).toBe(true);
   });
 
   it('disables the "previous" link if current-page is 1', function() {
     $rootScope.currentPage = 1;
     $rootScope.$digest();
-    expect(element.find('li').eq(0).hasClass('disabled')).toBe(true);
+    var previousPageItem = element.find('li').eq(0);
+    expect(previousPageItem.hasClass('disabled')).toBe(true);
   });
 
   it('disables the "next" link if current-page is num-pages', function() {
     $rootScope.currentPage = 5;
     $rootScope.$digest();
-    expect(element.find('li').eq(-1).hasClass('disabled')).toBe(true);
+    var nextPageItem = element.find('li').eq(-1);
+    expect(nextPageItem.hasClass('disabled')).toBe(true);
   });
 
   it('changes currentPage if a page link is clicked', function() {
-    var page2 = element.find('li').eq(2).find('a').eq(0);
+    var page2 = element.find('li').eq(2).find('a');
     page2.click();
     $rootScope.$digest();
     expect($rootScope.currentPage).toBe(2);
