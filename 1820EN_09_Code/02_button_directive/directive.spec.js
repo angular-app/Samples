@@ -21,17 +21,9 @@ describe('button directive', function () {
     expect(element.hasClass('btn-large')).toBe(true);
   });
 
-  it('set button type and CSS classes correctly', function() {
+  it('adds primary class to submit buttons', function() {
     var element = $compile('<button type="submit"></button>')($rootScope);
     expect(element.hasClass('btn-primary')).toBe(true);
-    expect(element.attr('type')).toBe('submit');
-
-    element = $compile('<button type="reset"></button>')($rootScope);
-    expect(element.attr('type')).toBe('reset');
-
-    element = $compile('<button type="warning"> </button>')($rootScope);
-    expect(element.hasClass('btn-warning')).toBe(true);
-    expect(element.attr('type')).toBe('button');
   });
 
 });
