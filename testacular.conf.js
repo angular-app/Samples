@@ -6,14 +6,16 @@ basePath = '.';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
+  'lib/jquery-1.8.3/jquery-1.8.3.js',
+  'lib/jquery-ui-1.9.2/js/datepicker.js',
   'lib/angular/1.0.2/angular.js',
   'lib/angular/1.0.2/angular-mocks.js',
-  'chapter*/*/*.js',
-  'chapter*/*/test/*Spec.js'
+  '1820EN_*/*/*.js'
 ];
 
 // list of files to exclude
 exclude = [
+  '1820EN_09_Code/01_directive_test_skeleton/test.js'
 ];
 
 // Start these browsers, currently available:
@@ -23,7 +25,7 @@ exclude = [
 // - Opera
 // - Safari
 // - PhantomJS
-browsers = ['Chrome'];
+browsers = [];
 
 // test results reporter to use
 // possible values: dots || progress
