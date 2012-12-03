@@ -5,7 +5,7 @@ describe('date-picker directive', function() {
     $.datepicker._selectDate(element);
   };
 
-  beforeEach(module('directives'));
+  beforeEach(module('date-picker-directive'));
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;

@@ -1,6 +1,6 @@
 describe('pagination directive', function () {
   var $rootScope, element;
-  beforeEach(module('directives'));
+  beforeEach(module('pagination-directive'));
   beforeEach(inject(function(_$compile_, _$rootScope_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;

@@ -1,6 +1,6 @@
 describe('linkButton directive', function () {
   var element;
-  beforeEach(module('directives'));
+  beforeEach(module('link-button-directive'));
   beforeEach(inject(function($compile, $rootScope) {
     element = $compile('<link-button type="primary" size="large" href="#link1">Click Me!</link-button>')($rootScope);
   }));

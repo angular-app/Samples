@@ -1,4 +1,4 @@
-angular.module('directives', [])
+angular.module('date-picker-directive', [])
 
 .directive('datePicker', function () {
   return {

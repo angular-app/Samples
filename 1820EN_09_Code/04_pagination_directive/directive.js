@@ -1,4 +1,4 @@
-angular.module('directives', [])
+angular.module('pagination-directive', [])
 
 .directive('pagination', function() {
   return {
