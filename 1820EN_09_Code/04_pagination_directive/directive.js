@@ -30,7 +30,6 @@ angular.module('pagination-directive', [])
         return scope.currentPage === 1;
       };
       scope.noNext = function() {
-        console.log(scope.currentPage, scope.numPages, scope.currentPage === scope.numPages);
         return scope.currentPage === scope.numPages;
       };
       scope.isActive = function(page) {
