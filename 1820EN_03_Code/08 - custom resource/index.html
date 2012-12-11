@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="customResource.js"></script>
+    <script src="example.js"></script>
+</head>
+<body ng-app="customResourceDemo" ng-controller="CustomResourceCtrl">
+
+   <h1>Users</h1>
+   <button ng-click="addSuperhero()">Add</button>
+   <ul ng-repeat="user in users">
+       <li>{{user.firstName}}</li>
+   </ul>
+
+   <h1>Projects</h1>
+   <ul ng-repeat="project in projects">
+       <li>{{project.name}}</li>
+   </ul>
+</body>
+</html>

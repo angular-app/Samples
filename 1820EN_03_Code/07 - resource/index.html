@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-resource.js"></script>
+    <script src="resource.js"></script>
+</head>
+<body ng-app="resource" ng-controller="ResourceCtrl">
+<button ng-click="add()">Add new user</button>
+<button ng-click="add()">Add new user - class level</button>
+<ul>
+    <li ng-repeat="user in users">
+        <a ng-click="remove(user)">{{user}} - {{user.getFullName()}}</a>
+    </li>
+</ul>
+</body>
+</html>
