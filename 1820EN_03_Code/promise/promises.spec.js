@@ -1,114 +1,132 @@
-describe('bars', function () {
+function createCustomer(name, $log) {
+  return {
+    eat: function (food) {
+      $log.info(name + " is eating delicious "+food);
+    },
+    beHungry: function (reason) {
+      $log.warn(name + " is hungry and sad because: "+reason);
+    }
+  };
+};
 
-  var Person = function ($log) {
-    this.$log = $log;
+function createPizzaCompany($log, $q) {
+  var currentOrder;
+  return {
+    orderMargherita: function() {
+      currentOrder = $q.defer();
+      return currentOrder.promise;
+    },
+    deliverMargherita: function() {
+      currentOrder.resolve('Margherita Pizza');
+    },
+    outOfMargheritas: function() {
+      currentOrder.reject('there are no Margherita pizzas left');
+    }
   };
-  Person.prototype.eat = function (food) {
-    this.$log.info("Eating delicious "+food);
-  };
-  Person.prototype.beHungry = function (reason) {
-    this.$log.warn("I'm hungry and sad because: "+reason);
-  };
+};
 
-  var $q, $exceptionHandler, $log, $rootScope;
-  var servePreparedOrder, promisedOrder, me, myFriend;
-  beforeEach(inject(function (_$q_, _$exceptionHandler_, _$log_, _$rootScope_) {
+describe('Promises', function () {
+
+  var $q, $log, $rootScope;
+  beforeEach(inject(function (_$q_, _$log_, _$rootScope_) {
     $q = _$q_;
-    $exceptionHandler = _$exceptionHandler_;
     $log = _$log_;
     $rootScope = _$rootScope_;
-    me = new Person($log);
-    myFriend = new Person($log);
   }));
 
-  describe('fast food bar', function () {
 
-    beforeEach(function () {
-      servePreparedOrder = $q.defer();
-      promisedOrder = servePreparedOrder.promise;
+  describe('Ordering a Margherita Pizza', function () {
+  
+    var promisedOrder, pawel, pete, pizzaCompany;
+    beforeEach(function() {
+      pawel = createCustomer('Pawel', $log);
+      pete = createCustomer('Pete', $log);
+      pizzaCompany = createPizzaCompany($log, $q);
+      promisedOrder = pizzaCompany.orderMargherita();
     });
 
-    it('should propagate fulfillment', function () {
+    it('should get a promised pizza if they deliver it', function () {
 
-      promisedOrder.then(function(sandwich){
-        me.eat(sandwich);
-      });
+      promisedOrder.then(pawel.eat);
 
-      servePreparedOrder.resolve('burger');
+      pizzaCompany.deliverMargherita();
+
       $rootScope.$digest();
 
-      expect($log.info.logs).toContain(['Eating delicious burger']);
+      expect($log.info.logs).toContain(['Pawel is eating delicious Margherita Pizza']);
     });
 
-    it('should propagate rejection', function () {
+    it('should get an apology if they are out of stock', function () {
 
-      promisedOrder.then(function(sandwich){
-        me.eat(sandwich);
-      }, function(reason){
-        me.beHungry(reason);
-      });
+      promisedOrder.then(pawel.eat, pawel.beHungry);
 
-      servePreparedOrder.reject('there are no burgers left...');
+      pizzaCompany.outOfMargheritas();
+
       $rootScope.$digest();
 
-      expect($log.warn.logs).toContain(['I\'m hungry and sad because: there are no burgers left...']);
+      expect($log.warn.logs).toContain(['Pawel is hungry and sad because: there are no Margherita pizzas left']);
     });
 
     it('should inform all interested parties', function () {
 
-      promisedOrder.then(function(sandwich){
-        me.eat(sandwich);
-      });
-      promisedOrder.then(function(sandwich){
-        myFriend.eat(sandwich);
-      });
+      promisedOrder.then(pawel.eat);
+      promisedOrder.then(pete.eat);
 
-      servePreparedOrder.resolve('formula for two');
+      pizzaCompany.deliverMargherita();
+
       $rootScope.$digest();
 
-      expect($log.info.logs).toContain(['Eating delicious formula for two']);
+      expect($log.info.logs).toContain(['Pawel is eating delicious Margherita Pizza']);
+      expect($log.info.logs).toContain(['Pete is eating delicious Margherita Pizza']);
       expect($log.info.logs.length).toEqual(2);
     });
 
     it('should resolve chained promises', function () {
 
-      var prepareSandwich = $q.defer();
-      var preparedSandwichPromise = prepareSandwich.promise;
+      function slicePizza(pizza){
+        return 'sliced ' + pizza;
+      }
 
-      var promisedOrder = preparedSandwichPromise.then(function serveSandwich(sandwich){
-        return sandwich;
-      }).then(function(sandwich){
-        me.eat(sandwich);
-      });
+      var promisedOrder = pizzaCompany.orderMargherita();
 
-      prepareSandwich.resolve('burger just prepared');
+      promisedOrder
+        .then(slicePizza)
+        .then(pawel.eat);
+
+      pizzaCompany.deliverMargherita();
+
       $rootScope.$digest();
 
-      expect($log.info.logs).toContain(['Eating delicious burger just prepared']);
+      expect($log.info.logs).toContain(['Pawel is eating delicious sliced Margherita Pizza']);
     });
 
 
     it('should fail chained promises with the original reason', function () {
 
-      var prepareSandwich = $q.defer();
-      var preparedSandwichPromise = prepareSandwich.promise;
+      function slicePizza(pizza){
+        return 'sliced ' + pizza;
+      }
 
-      var promisedOrder = preparedSandwichPromise.then(function serveSandwich(sandwich){
-        return sandwich;
-      }).then(function(sandwich){
-          me.eat(sandwich);
-        }, function(reason){
-          me.beHungry(reason);
-        });
+      var promisedOrder = pizzaCompany.orderMargherita();
 
-      prepareSandwich.reject('there is no chease...');
+      promisedOrder
+        .then(slicePizza)
+        .then(pawel.eat, pawel.beHungry);
+
+      pizzaCompany.outOfMargheritas();
+
       $rootScope.$digest();
 
-      expect($log.warn.logs).toContain([ 'I\'m hungry and sad because: there is no chease...' ]);
+      expect($log.warn.logs).toContain([ 'Pawel is hungry and sad because: there are no Margherita pizzas left' ]);
     });
   });
 
   describe('fresh made salads bar', function () {
+    var servePreparedOrder, pawel;
+
+    beforeEach(function() {
+      pawel = createCustomer('Pawel', $log);
+    });
 
     it('should wait for all the ingredients', function () {
 
@@ -119,7 +137,7 @@ describe('bars', function () {
       var bringLettuce = $q.defer();
 
       promisedOrder.then(function(salad){
-        me.eat(salad);
+        pawel.eat(salad);
       });
 
       var ingredientsPromise = $q.all([bringTomatoes.promise, bringLettuce.promise]);
@@ -132,7 +150,7 @@ describe('bars', function () {
 
       $rootScope.$digest();
 
-      expect($log.info.logs).toContain(['Eating delicious Fresh salad with: red tomatoes,green tomatoes and lettuce']);
+      expect($log.info.logs).toContain(['Pawel is eating delicious Fresh salad with: red tomatoes,green tomatoes and lettuce']);
     });
 
     it('should wait for all the ingredients even if some of them ready', function () {
@@ -143,7 +161,7 @@ describe('bars', function () {
       var bringTomatoes = $q.defer();
 
       promisedOrder.then(function(salad){
-        me.eat(salad);
+        pawel.eat(salad);
       });
 
       var ingredientsPromise = $q.all([bringTomatoes.promise, $q.when('lettuce')]);
@@ -155,7 +173,7 @@ describe('bars', function () {
 
       $rootScope.$digest();
 
-      expect($log.info.logs).toContain(['Eating delicious Fresh salad with: red tomatoes,green tomatoes and lettuce']);
+      expect($log.info.logs).toContain(['Pawel is eating delicious Fresh salad with: red tomatoes,green tomatoes and lettuce']);
     });
 
     it('should fail if one of ingredients is missing', function () {
@@ -167,9 +185,9 @@ describe('bars', function () {
       var bringLettuce = $q.defer();
 
       promisedOrder.then(function(salad){
-        me.eat(salad);
+        pawel.eat(salad);
       }, function(reason) {
-        me.beHungry(reason);
+        pawel.beHungry(reason);
       });
 
       var ingredientsPromise = $q.all([bringTomatoes.promise, bringLettuce.promise]);
@@ -184,7 +202,7 @@ describe('bars', function () {
 
       $rootScope.$digest();
 
-      expect($log.warn.logs).toContain(['I\'m hungry and sad because: no fresh lettuce']);
+      expect($log.warn.logs).toContain(['Pawel is hungry and sad because: no fresh lettuce']);
     });
   });
 
