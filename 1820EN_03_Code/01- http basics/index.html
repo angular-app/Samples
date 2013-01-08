@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="httpbasics.js"></script>
+</head>
+<body ng-app="httpbasics" ng-controller="HttpBasicsCtrl">
+<hr>
+<div>
+    <button ng-click="getName()">$http GET name</button>
+    <button ng-click="getNameThen()">$http GET name then</button>
+    <pre>Hello, {{data.name}}! </pre>
+</div>
+<hr>
+<div>
+    <button ng-click="queryUsers()">$http GET</button>
+    <pre>{{users | json}}</pre>
+</div>
+<hr>
+<div>
+    <button ng-click="queryUsersGeneric()">$http GET generic</button>
+    <pre>{{usersGeneric | json}}</pre>
+</div>
+<hr>
+<div>
+    <button ng-click="addUser()">$http POST</button>
+    <pre>{{newUser | json}}</pre>
+</div>
+</body>
+</html>

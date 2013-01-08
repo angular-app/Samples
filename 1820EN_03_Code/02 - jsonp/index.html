@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="jsonp.js"></script>
+</head>
+<body ng-app="jsonp" ng-controller="JSONPCtrl">
+<div>
+    <button ng-click="jsonpGreet()">jsonp Greet</button>
+    <pre>
+        {{greeting | json}}
+    </pre>
+</div>
+</body>
+</html>
