@@ -1,0 +1,23 @@
+<!doctype html>
+<html ng-app="if-directive">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS Book - Chapter 10 - if Directive</title>
+  <script src="../../lib/angular/1.0.2/angular.js"></script>
+  <script src="directive.js"></script>
+</head>
+<body ng-init="model= {shown: true, count: 0}">
+  <button ng-click="model.shown = !model.shown">Toggle Div</button>
+  <div if="model.shown" ng-init="model.count=model.count+1">
+    Shown {{model.count}} times
+    </div>
+  </div>
+
+  <div ng-init="values = [0,1,2,3,4]">
+    <div ng-repeat="i in values">
+      <div if="values.length==4">{{i}}</div>
+    </div>  
+  </div>
+</div>
+</body>
+</html>
