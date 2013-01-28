@@ -40,7 +40,7 @@ angular.module('accordion', [])
     restrict:'E',
     controller:'AccordionController',
     transclude: true,
-    templateUrl: 'template/accordion/accordion.html'
+    templateUrl: '1820EN_10_Code/03_basic_accordion_directive/template/accordion/accordion.html'
   };
 })
 
@@ -51,7 +51,7 @@ angular.module('accordion', [])
     restrict:'E',                 // It will be an element
     transclude:true,              // It transcludes the contents of the directive into the template
     replace: true,                // The element containing the directive will be replaced with the template
-    templateUrl:'template/accordion/accordion-group.html',
+    templateUrl:'1820EN_10_Code/03_basic_accordion_directive/template/accordion/accordion-group.html',
     scope:{ heading:'@' },          // Create an isolated scope and mirror the heading attribute onto this scope
     link: function(scope, element, attrs, accordionCtrl) {
       accordionCtrl.addGroup(scope);

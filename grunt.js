@@ -1,8 +1,13 @@
 module.exports = function (grunt) {
 
+  grunt.loadTasks('build');
+
   grunt.initConfig({
+    html2js: {
+      src: ['1820EN_*/**/template/**/*.html']
+    },
     lint:{
-      files:['grunt.js', 'chapter*/**/*.js']
+      files:['grunt.js', '1820EN_*/**/*.js']
     }
   });
 

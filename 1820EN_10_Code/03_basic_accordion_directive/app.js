@@ -1,4 +1,4 @@
-angular.module('app', ['accordion', 'template/accordion/accordion.html', 'template/accordion/accordion-group.html'])
+angular.module('app', ['accordion', '1820EN_10_Code/03_basic_accordion_directive/template/accordion/accordion.html', '1820EN_10_Code/03_basic_accordion_directive/template/accordion/accordion-group.html'])
 
 .controller('AccordionDemoCtrl', function ($scope) {
   $scope.groups = [
