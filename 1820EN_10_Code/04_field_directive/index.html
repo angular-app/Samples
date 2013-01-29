@@ -10,10 +10,12 @@
   <script src="template/number.html.js"></script>
 </head>
 <body ng-init="myModel = {}">
-  <form name="form">
-    <field ng-model="myModel.myNumber" type="number" label="My Number"></field> {{ myModel.myNumber }}
+  <form name="form" class="form-inline">
+    <field ng-model="myModel.myNumber" type="number" label="My Number">
+      <validator key="number">Please enter a valid number</validator>
+    </field> {{ myModel.myNumber }}
     <field ng-model="myModel.myText" type="text" label="My Text">
-      <validator key="required" message="My Text is required" attributes="{required: true}"></validator>
+      <validator key="required" options="{required: true}">My Text is {{ 5+2 }} required</validator>
     </field> {{ myModel.myText }}
   </form>
 </body>

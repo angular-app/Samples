@@ -40,22 +40,24 @@ angular.module('field-directive', ['1820EN_10_Code/04_field_directive/template/t
           inputElement.attr('id', childScope.id);
           newElement.find('label').attr('for', childScope.id);
 
-          childScope.$messages = {};
+          childScope.$validationMessages = {};
           var originalElement = transclude(scope);
           angular.forEach(originalElement.find('validator'), function(validatorElement) {
+            console.log('validator', validatorElement);
             validatorElement = angular.element(validatorElement);
-            childScope.$messages[validatorElement.attr('key')] = validatorElement.text();
-            var validationAttributes = scope.$eval(validatorElement.attr('attributes'));
-            angular.forEach(validationAttributes, function(key, value) {
+            childScope.$validationMessages[validatorElement.attr('key')] = validatorElement.text();
+            var validationAttributes = scope.$eval(validatorElement.attr('options'));
+            angular.forEach(validationAttributes, function(value, key) {
               inputElement.attr(key, value);
             });
           });
+          console.log(childScope.$validationMessages);
 
           childScope.$watch('$field.$error', function(errors) {
             childScope.$messages = [];
-            angular.forEach(errors, function(key, value) {
+            angular.forEach(errors, function(value, key) {
               if ( value ) {
-                childScope.$messages.push(childScope.$messages[key]);
+                childScope.$messages.push(childScope.$validationMessages[key]);
               }
             });
           }, true);

@@ -4,7 +4,7 @@ angular.module("1820EN_10_Code/04_field_directive/template/number.html", []).run
     "  <label class=\"control-label\">{{label}}</label>" +
     "  <div class=\"controls\">" +
     "    <input type=\"number\">" +
-    "    <span ng-repeat=\"message in $messages\" class=\"help-inline\">{{message.text}}</span>" +
+    "    <span ng-repeat=\"message in $messages\" class=\"help-inline\">{{message}}</span>" +
     "  </div>" +
     "</div>");
 }]);
