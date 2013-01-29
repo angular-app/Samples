@@ -1,7 +1,7 @@
 angular.module('field-directive', [
-  '1820EN_10_Code/04_field_directive/template/text.html',
+  '1820EN_10_Code/04_field_directive/template/input.html',
   '1820EN_10_Code/04_field_directive/template/textarea.html',
-  '1820EN_10_Code/04_field_directive/template/number.html'
+  '1820EN_10_Code/04_field_directive/template/select.html'
 ])
 
 .directive('field', function($compile, $http, $templateCache, $interpolate) {
@@ -15,7 +15,7 @@ angular.module('field-directive', [
     priority: 100,        // We need this directive to happen before ng-model
     terminal: true,       // We are going to deal with this element
     require: '?^form',    // If we are in a form then we can access the ngModelController
-    compile:function compile(originalElement, attrs) {
+    compile:function compile(element, attrs) {
       var modelId, templatePromise, getFieldElement;
 
       // Generate an id for the input from the ng-model expression
@@ -23,16 +23,20 @@ angular.module('field-directive', [
       modelId = attrs.ngModel.replace('.', '_').toLowerCase();
 
       // Load up the template for this kind of field
-      getFieldElement = $http.get('1820EN_10_Code/04_field_directive/template/' + attrs.type + '.html', {cache:$templateCache}).then(function(response) {
+      var template = attrs.template || 'input';   // Default to the simple input if none given
+      getFieldElement = $http.get('1820EN_10_Code/04_field_directive/template/' + template + '.html', {cache:$templateCache}).then(function(response) {
         var newElement = angular.element(response.data);
         var inputElement = findInputElement(newElement);
         // Copy over the attributes to the input element
         // At least the ng-model attribute must be copied because we can't use interpolation in the template
-        angular.forEach(attrs, function (value, key) {
-          if ( key.charAt(0) === '$' || key === 'label' || key === 'type' ) {
+        angular.forEach(element[0].attributes, function (attribute) {
+          var value = attribute.value;
+          var key = attribute.name;
+          if ( key === 'label' ) {
             return;
           }
-          inputElement.attr(attrs.$attr[key], value);
+          console.log(key, ':', value);
+          inputElement.attr(key, value);
         });
         return newElement;
       });
@@ -55,7 +59,7 @@ angular.module('field-directive', [
           newElement.find('label').attr('for', childScope.id);
 
           childScope.$validationMessages = {};
-          angular.forEach(originalElement.find('validator'), function(validatorElement) {
+          angular.forEach(element.find('validator'), function(validatorElement) {
             validatorElement = angular.element(validatorElement);
             
             // We need to watch the message incase it has interpolated values that need processing
@@ -77,6 +81,7 @@ angular.module('field-directive', [
             // transclusion caused the directive element to be converted to a template.
             // Comments are ignored by ng-repeat, otherwise this would not work
             element.after(clone);
+            element.remove();
           });
 
           // Only after the new element has been compiled will we have access to the $field

@@ -5,25 +5,32 @@
   <title>AngularJS Book - Chapter 10 - field Directive</title>
   <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
   <script src="../../lib/angular/1.0.4/angular.js"></script>
+  
+  <!-- Load the field directive -->
   <script src="field-directive.js"></script>
-  <script src="template/text.html.js"></script>
+
+  <!-- Load up the templates -->
+  <script src="template/input.html.js"></script>
   <script src="template/textarea.html.js"></script>
-  <script src="template/number.html.js"></script>
+  <script src="template/select.html.js"></script>
 </head>
 <body ng-init="myModel = {}">
   <form name="form" class="form-inline" novalidate ng-init="x=10">
     <field ng-model="myModel.myNumber" type="number" label="My Number"></field>
-    {{ myModel.myNumber }}
-    
+
     <field ng-model="myModel.myText" type="text" label="My Text" required="true">
       <validator key="required">My Text is required</validator>
     </field>
-    {{ myModel.myText }}
 
-    <field ng-model="myModel.myBigText" type="textarea" label="My Big Text" ng-maxlength="{{x}}">
-      <validator key="maxlength">My Big Text must be less than {{x}}</validator>
+    <field ng-model="myModel.myBigText" template="textarea" label="My Big Text" ng-maxlength="5" ng-minlength="2" required="true">
+      <validator key="maxlength">My Big Text must be less than 5</validator>
+      <validator key="minlength">My Big Text must be greater than 2</validator>
+      <validator key="required">My Big Text must be greater than 2</validator>
     </field>
-    {{ myModel.myBigText }}
+
+    <field ng-model="myModel.choice" template="select" label="Choose something" ng-options="x for x in ['A','B', 'C']"></field>
+
+    <pre>{{myModel | json}}</pre>
   </form>
 </body>
 </html>
