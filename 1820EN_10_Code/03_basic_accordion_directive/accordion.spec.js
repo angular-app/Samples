@@ -2,8 +2,8 @@ describe('accordion', function () {
   var $scope;
 
   beforeEach(module('accordion'));
-  beforeEach(module('template/accordion/accordion.html'));
-  beforeEach(module('template/accordion/accordion-group.html'));
+  beforeEach(module('1820EN_10_Code/03_basic_accordion_directive/template/accordion/accordion-group.html'));
+  beforeEach(module('1820EN_10_Code/03_basic_accordion_directive/template/accordion/accordion.html'));
 
   beforeEach(inject(function ($rootScope) {
     $scope = $rootScope;
