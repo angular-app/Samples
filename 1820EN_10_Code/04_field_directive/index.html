@@ -7,17 +7,23 @@
   <script src="../../lib/angular/1.0.4/angular.js"></script>
   <script src="field-directive.js"></script>
   <script src="template/text.html.js"></script>
+  <script src="template/textarea.html.js"></script>
   <script src="template/number.html.js"></script>
 </head>
 <body ng-init="myModel = {}">
-  <form name="form" class="form-inline" ng-init="x = 3" novalidate>
-    <button ng-click="x=5">X</button>
-    <field ng-model="myModel.myNumber" type="number" label="My Number">
-      <validator key="number">Please enter a valid number</validator>
-    </field> {{ myModel.myNumber }}
-    <field ng-model="myModel.myText" type="text" label="My Text">
-      <validator key="required" options="{required: true}">My Text is {{ x }} required</validator>
-    </field> {{ myModel.myText }}
+  <form name="form" class="form-inline" novalidate ng-init="x=10">
+    <field ng-model="myModel.myNumber" type="number" label="My Number"></field>
+    {{ myModel.myNumber }}
+    
+    <field ng-model="myModel.myText" type="text" label="My Text" required="true">
+      <validator key="required">My Text is required</validator>
+    </field>
+    {{ myModel.myText }}
+
+    <field ng-model="myModel.myBigText" type="textarea" label="My Big Text" ng-maxlength="{{x}}">
+      <validator key="maxlength">My Big Text must be less than {{x}}</validator>
+    </field>
+    {{ myModel.myBigText }}
   </form>
 </body>
 </html>

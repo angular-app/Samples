@@ -1,6 +1,14 @@
-angular.module('field-directive', ['1820EN_10_Code/04_field_directive/template/text.html', '1820EN_10_Code/04_field_directive/template/number.html'])
+angular.module('field-directive', [
+  '1820EN_10_Code/04_field_directive/template/text.html',
+  '1820EN_10_Code/04_field_directive/template/textarea.html',
+  '1820EN_10_Code/04_field_directive/template/number.html'
+])
 
 .directive('field', function($compile, $http, $templateCache, $interpolate) {
+
+  var findInputElement = function(element) {
+    return angular.element(element.find('input')[0] || element.find('textarea')[0] || element.find('select')[0]);
+  };
 
   return {
     restrict:'E',
@@ -17,9 +25,15 @@ angular.module('field-directive', ['1820EN_10_Code/04_field_directive/template/t
       // Load up the template for this kind of field
       getFieldElement = $http.get('1820EN_10_Code/04_field_directive/template/' + attrs.type + '.html', {cache:$templateCache}).then(function(response) {
         var newElement = angular.element(response.data);
-        var inputElement = newElement.find('input') || newElement.find('textarea') || newElement.find('select');
-        // Copy over the ng-model attribute directly because it won't work using interpolation in the template
-        inputElement.attr('ng-model', attrs.ngModel);
+        var inputElement = findInputElement(newElement);
+        // Copy over the attributes to the input element
+        // At least the ng-model attribute must be copied because we can't use interpolation in the template
+        angular.forEach(attrs, function (value, key) {
+          if ( key.charAt(0) === '$' || key === 'label' || key === 'type' ) {
+            return;
+          }
+          inputElement.attr(attrs.$attr[key], value);
+        });
         return newElement;
       });
 
@@ -35,7 +49,7 @@ angular.module('field-directive', ['1820EN_10_Code/04_field_directive/template/t
         getFieldElement.then(function(newElement) {
           // We need to set the input element's name here before we compile.
           // If we leave it to interpolation, the formController doesn't pick it up
-          var inputElement = newElement.find('input') || newElement.find('textarea') || newElement.find('select');
+          var inputElement = findInputElement(newElement);
           inputElement.attr('name', childScope.name);
           inputElement.attr('id', childScope.id);
           newElement.find('label').attr('for', childScope.id);
