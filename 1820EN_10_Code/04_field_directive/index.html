@@ -15,10 +15,12 @@
   <script src="template/select.html.js"></script>
 </head>
 <body ng-init="myModel = {}">
-  <form name="form" class="form-inline" novalidate ng-init="x=10">
-    <field ng-model="myModel.myNumber" type="number" label="My Number"></field>
+  <form name="form" class="form-inline" novalidate>
+    <field ng-model="myModel.myNumber" type="number" >
+      <label>Labels which can <span ng-repeat="i in [0,1]">{{i}}</span> contain directives</label>
+    </field>
 
-    <field ng-model="myModel.myText" type="text" label="My Text" required="true">
+    <field ng-model="myModel.myText" type="text" label="My {{'Text'}}" required="true">
       <validator key="required">My Text is required</validator>
     </field>
 

@@ -16,80 +16,97 @@ angular.module('field-directive', [
     terminal: true,       // We are going to deal with this element
     require: '?^form',    // If we are in a form then we can access the ngModelController
     compile:function compile(element, attrs) {
-      var modelId, templatePromise, getFieldElement;
 
-      // Generate an id for the input from the ng-model expression
-      // (we need to replace dots with something to work with browsers and also form scope)
-      modelId = attrs.ngModel.replace('.', '_').toLowerCase();
+      // Find all the <validator> child elements and extract their validation message info
+      var validationMessages = [];
+      angular.forEach(element.find('validator'), function(validatorElement) {
+        validatorElement = angular.element(validatorElement);
+        validationMessages.push({
+          key: validatorElement.attr('key'),
+          getMessage: $interpolate(validatorElement.text())
+        });
+      });
+
+      // Find the content that will go into the new label
+      var labelContent = '';
+      if ( element.attr('label') ) {
+        labelContent = element.attr('label');
+        element[0].removeAttribute('label');
+      }
+      if ( element.find('label')[0] ) {
+        labelContent = element.find('label').html();
+      }
+      if ( !labelContent ) {
+        throw new Error('No label provided');
+      }
 
       // Load up the template for this kind of field
       var template = attrs.template || 'input';   // Default to the simple input if none given
-      getFieldElement = $http.get('1820EN_10_Code/04_field_directive/template/' + template + '.html', {cache:$templateCache}).then(function(response) {
+      var getFieldElement = $http.get('1820EN_10_Code/04_field_directive/template/' + template + '.html', {cache:$templateCache}).then(function(response) {
         var newElement = angular.element(response.data);
         var inputElement = findInputElement(newElement);
+
         // Copy over the attributes to the input element
         // At least the ng-model attribute must be copied because we can't use interpolation in the template
         angular.forEach(element[0].attributes, function (attribute) {
           var value = attribute.value;
           var key = attribute.name;
-          if ( key === 'label' ) {
-            return;
-          }
-          console.log(key, ':', value);
           inputElement.attr(key, value);
         });
+
+        // Update the label's contents
+        var labelElement = newElement.find('label');
+        labelElement.html(labelContent);
+
         return newElement;
       });
 
       return function (scope, element, attrs, formController) {
-        var childScope = scope.$new();
-        childScope.id = childScope.name = modelId + '_' + childScope.$id;
-
-        attrs.$observe('label', function(value) {
-          // We map the label attribute to the child scope
-          childScope.label = value;
-        });
-
+        // We have to wait for the field element template to be loaded
         getFieldElement.then(function(newElement) {
-          // We need to set the input element's name here before we compile.
-          // If we leave it to interpolation, the formController doesn't pick it up
+          // Our template will have its own child scope
+          var childScope = scope.$new();
+
+          // Generate an id for the input from the ng-model expression
+          // (we need to replace dots with something to work with browsers and also form scope)
+          // (We couldn't do this in the compile function as we need the scope to
+          // be able to calculate the unique id)
+          childScope.$modelId = attrs.ngModel.replace('.', '_').toLowerCase() + '_' + childScope.$id;
+
+          // Wire up the input (id and name) and its label (for)
+          // (We need to set the input element's name here before we compile.
+          // If we leave it to interpolation, the formController doesn't pick it up)
           var inputElement = findInputElement(newElement);
-          inputElement.attr('name', childScope.name);
-          inputElement.attr('id', childScope.id);
-          newElement.find('label').attr('for', childScope.id);
+          inputElement.attr('name', childScope.$modelId);
+          inputElement.attr('id', childScope.$modelId);
+          newElement.find('label').attr('for', childScope.$modelId);
 
+          // TODO: Consider moving this validator stuff into its own directive
+          // and use a directive controller to wire it all up
           childScope.$validationMessages = {};
-          angular.forEach(element.find('validator'), function(validatorElement) {
-            validatorElement = angular.element(validatorElement);
-            
-            // We need to watch the message incase it has interpolated values that need processing
-            scope.$watch($interpolate(validatorElement.text()), function (message) {
-              childScope.$validationMessages[validatorElement.attr('key')] = message;
-            });
-
-            // Extract the options and bind them to the input element            
-            var validationAttributes = scope.$eval(validatorElement.attr('options'));
-            angular.forEach(validationAttributes, function(value, key) {
-              inputElement.attr(key, value);
+          angular.forEach(validationMessages, function(validationMessage) {
+            // We need to watch incase it has interpolated values that need processing
+            scope.$watch(validationMessage.getMessage, function (message) {
+              childScope.$validationMessages[validationMessage.key] = message;
             });
           });
 
-          // We must compile in the postLink function rather than the compile function
+          // We must compile our new element in the postLink function rather than in the compile function
+          // (i.e. after any parent form element has been linked)
           // otherwise the new input won't pick up the FormController
           $compile(newElement)(childScope, function(clone) {
-            // We can only add the new element after the directive element because
-            // transclusion caused the directive element to be converted to a template.
-            // Comments are ignored by ng-repeat, otherwise this would not work
+            // Place our new element after the original element
             element.after(clone);
+            // Remove our original element
             element.remove();
           });
 
-          // Only after the new element has been compiled will we have access to the $field
+          // Only after the new element has been compiled do we have access to the ngModelController
+          // (i.e. formController[childScope.name])
           if ( formController ) {
             childScope.$form = formController;
-            childScope.$field = formController[childScope.name];
+            childScope.$field = formController[childScope.$modelId];
           }
-
         });
       };
     }
