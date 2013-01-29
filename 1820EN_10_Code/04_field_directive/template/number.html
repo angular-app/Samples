@@ -2,6 +2,6 @@
   <label class="control-label">{{label}}</label>
   <div class="controls">
     <input type="number">
-    <span ng-repeat="message in $messages" class="help-inline">{{message}}</span>
+    <span ng-repeat="error in $errors" class="help-inline">{{$validationMessages[error]}}</span>
   </div>
 </div>

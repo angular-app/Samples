@@ -1,6 +1,6 @@
 angular.module('field-directive', ['1820EN_10_Code/04_field_directive/template/text.html', '1820EN_10_Code/04_field_directive/template/number.html'])
 
-.directive('field', function($compile, $http, $templateCache) {
+.directive('field', function($compile, $http, $templateCache, $interpolate) {
 
   return {
     restrict:'E',
@@ -14,7 +14,7 @@ angular.module('field-directive', ['1820EN_10_Code/04_field_directive/template/t
       // (we need to replace dots with something to work with browsers and also form scope)
       modelId = attrs.ngModel.replace('.', '_').toLowerCase();
 
-      // Load up the relevant template
+      // Load up the template for this kind of field
       getFieldElement = $http.get('1820EN_10_Code/04_field_directive/template/' + attrs.type + '.html', {cache:$templateCache}).then(function(response) {
         var newElement = angular.element(response.data);
         var inputElement = newElement.find('input') || newElement.find('textarea') || newElement.find('select');
@@ -43,26 +43,22 @@ angular.module('field-directive', ['1820EN_10_Code/04_field_directive/template/t
           childScope.$validationMessages = {};
           var originalElement = transclude(scope);
           angular.forEach(originalElement.find('validator'), function(validatorElement) {
-            console.log('validator', validatorElement);
             validatorElement = angular.element(validatorElement);
-            childScope.$validationMessages[validatorElement.attr('key')] = validatorElement.text();
+            
+            // We need to watch the message incase it has interpolated values that need processing
+            scope.$watch($interpolate(validatorElement.text()), function (message) {
+              childScope.$validationMessages[validatorElement.attr('key')] = message;
+            });
+
+            // Extract the options and bind them to the input element            
             var validationAttributes = scope.$eval(validatorElement.attr('options'));
             angular.forEach(validationAttributes, function(value, key) {
               inputElement.attr(key, value);
             });
           });
-          console.log(childScope.$validationMessages);
 
-          childScope.$watch('$field.$error', function(errors) {
-            childScope.$messages = [];
-            angular.forEach(errors, function(value, key) {
-              if ( value ) {
-                childScope.$messages.push(childScope.$validationMessages[key]);
-              }
-            });
-          }, true);
-
-          // We must compile here otherwise the new input won't pick up the FormController
+          // We must compile in the postLink function rather than the compile function
+          // otherwise the new input won't pick up the FormController
           $compile(newElement)(childScope, function(clone) {
             // We can only add the new element after the directive element because
             // transclusion caused the directive element to be converted to a template.
@@ -70,6 +66,7 @@ angular.module('field-directive', ['1820EN_10_Code/04_field_directive/template/t
             element.after(clone);
           });
 
+          // Only after the new element has been compiled will we have access to the $field
           if ( formController ) {
             childScope.$form = formController;
             childScope.$field = formController[childScope.name];
