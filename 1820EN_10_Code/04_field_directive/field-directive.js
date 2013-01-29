@@ -13,9 +13,9 @@ angular.module('field-directive', [
   return {
     restrict:'E',
     priority: 100,        // We need this directive to happen before ng-model
-    transclude: 'element',
+    terminal: true,       // We are going to deal with this element
     require: '?^form',    // If we are in a form then we can access the ngModelController
-    compile:function compile(element, attrs, transclude) {
+    compile:function compile(originalElement, attrs) {
       var modelId, templatePromise, getFieldElement;
 
       // Generate an id for the input from the ng-model expression
@@ -55,7 +55,6 @@ angular.module('field-directive', [
           newElement.find('label').attr('for', childScope.id);
 
           childScope.$validationMessages = {};
-          var originalElement = transclude(scope);
           angular.forEach(originalElement.find('validator'), function(validatorElement) {
             validatorElement = angular.element(validatorElement);
             
