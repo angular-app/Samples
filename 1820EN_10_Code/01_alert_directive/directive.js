@@ -5,7 +5,7 @@ angular.module("alert-directive", [])
     restrict:'EA',
     replace: true,
     template:
-    '<div class="alert alert-block" ng-class="\'alert-\' + type">' +
+    '<div class="alert alert-block alert-{{type || \'info\'}}">' +
       '<button type="button" class="close" ng-click="close()">&times;</button>' +
       '<div ng-transclude></div>' +
     '</div>',

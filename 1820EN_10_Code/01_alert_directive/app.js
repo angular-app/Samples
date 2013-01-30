@@ -7,7 +7,7 @@ angular.module('app', ['alert-directive'])
   ];
 
   $scope.addAlert = function() {
-    $scope.alerts.push({type: 'warning', msg: "Watch out - another alert!"});
+    $scope.alerts.push({msg: "Watch out - another alert!"});
   };
 
   $scope.closeAlert = function(index) {
