@@ -46,7 +46,7 @@ angular.module('mongolabResource', [])
       };
 
       Resource.remove = function (data) {
-        return $http.delete(collectionUrl + '', defaultParams)
+        return $http['delete'](collectionUrl + '', defaultParams)
           .then(function (response) {
             return new Resource(data);
           });

@@ -7,7 +7,7 @@ describe('pizza pit', function () {
     };
     this.beHungry = function (reason) {
       $log.warn(name + " is hungry because: " + reason);
-    }
+    };
   };
 
   var $q, $exceptionHandler, $log, $rootScope;

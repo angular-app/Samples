@@ -18,7 +18,7 @@ angular.module('resource', ['ngResource'])
     });
 
     $scope.remove = function (user) {
-      Users.delete({}, user);
+      Users['delete']({}, user);
       //user.$delete();
     };
 

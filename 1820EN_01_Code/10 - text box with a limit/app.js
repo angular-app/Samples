@@ -25,4 +25,4 @@ var TextAreaWithLimitCtrl = function ($scope) {
   $scope.shouldWarn = function () {
     return $scope.remaining() < WARN_THRESHOLD;
   };
-}
+};

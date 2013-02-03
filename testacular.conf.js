@@ -26,7 +26,7 @@ exclude = [
 // - Opera
 // - Safari
 // - PhantomJS
-browsers = [];
+browsers = ['Chrome'];
 
 // test results reporter to use
 // possible values: dots || progress
@@ -50,4 +50,4 @@ autoWatch = true;
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit
-singleRun = false;
+singleRun = true;
