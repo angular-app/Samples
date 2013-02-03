@@ -7,7 +7,7 @@
   <script src="../../lib/angular/1.0.4/angular.js"></script>
   
   <!-- Load the field directive -->
-  <script src="field-directive.js"></script>
+  <script src="directive.js"></script>
 
   <!-- Load up the templates -->
   <script src="template/input.html.js"></script>
@@ -24,13 +24,13 @@
       <validator key="required">My Text is required</validator>
     </field>
 
-    <field ng-model="myModel.myBigText" template="textarea" label="My Big Text" ng-maxlength="5" ng-minlength="2" required="true">
+    <field ng-model="myModel.myBigText" template="textarea.html" label="My Big Text" ng-maxlength="5" ng-minlength="2" required="true">
       <validator key="maxlength">My Big Text must be less than 5</validator>
       <validator key="minlength">My Big Text must be greater than 2</validator>
       <validator key="required">My Big Text must be greater than 2</validator>
     </field>
 
-    <field ng-model="myModel.choice" template="select" label="Choose something" ng-options="x for x in ['A','B', 'C']"></field>
+    <field ng-model="myModel.choice" template="select.html" label="Choose something" ng-options="x for x in ['A','B', 'C']"></field>
 
     <pre>{{myModel | json}}</pre>
   </form>

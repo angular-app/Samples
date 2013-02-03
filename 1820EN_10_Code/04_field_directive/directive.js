@@ -1,10 +1,16 @@
-angular.module('field-directive', [
-  '1820EN_10_Code/04_field_directive/template/input.html',
-  '1820EN_10_Code/04_field_directive/template/textarea.html',
-  '1820EN_10_Code/04_field_directive/template/select.html'
-])
+angular.module('field-directive', ['input.html', 'textarea.html', 'select.html'])
 
-.directive('field', function($compile, $http, $templateCache, $interpolate) {
+.factory('loadTemplate', function($http, $templateCache) {
+  return function(template) {
+    return $http.get(template, {cache:$templateCache}).then(function(response) {
+      return angular.element(response.data);
+    }, function(response) {
+      throw new Error('Template not found: ' + template);
+    });
+  };
+})
+
+.directive('field', function($compile, $http, $interpolate, loadTemplate) {
 
   var findInputElement = function(element) {
     return angular.element(element.find('input')[0] || element.find('textarea')[0] || element.find('select')[0]);
@@ -28,26 +34,29 @@ angular.module('field-directive', [
       });
 
       // Find the content that will go into the new label
+      // (attribute trumps child element)
       var labelContent = '';
       if ( element.attr('label') ) {
+        // Label is provided as an attribute on the <field> element
         labelContent = element.attr('label');
         element[0].removeAttribute('label');
-      }
-      if ( element.find('label')[0] ) {
+      } else if ( element.find('label')[0] ) {
+        // Label is provided as a <label> child element of the <field> element
         labelContent = element.find('label').html();
       }
       if ( !labelContent ) {
         throw new Error('No label provided');
       }
 
+      element.html('');
+
       // Load up the template for this kind of field
-      var template = attrs.template || 'input';   // Default to the simple input if none given
-      var getFieldElement = $http.get('1820EN_10_Code/04_field_directive/template/' + template + '.html', {cache:$templateCache}).then(function(response) {
-        var newElement = angular.element(response.data);
-        var inputElement = findInputElement(newElement);
+      var template = attrs.template || 'input.html';   // Default to the simple input if none given
+      var getFieldElement = loadTemplate(template).then(function(newElement) {
 
         // Copy over the attributes to the input element
-        // At least the ng-model attribute must be copied because we can't use interpolation in the template
+        // We can't use interpolation in the template for directives such as ng-model
+        var inputElement = findInputElement(newElement);
         angular.forEach(element[0].attributes, function (attribute) {
           var value = attribute.value;
           var key = attribute.name;
@@ -95,10 +104,8 @@ angular.module('field-directive', [
           // (i.e. after any parent form element has been linked)
           // otherwise the new input won't pick up the FormController
           $compile(newElement)(childScope, function(clone) {
-            // Place our new element after the original element
-            element.after(clone);
-            // Remove our original element
-            element.remove();
+            // Place our new element as a child of the original element
+            element.append(clone);
           });
 
           // Only after the new element has been compiled do we have access to the ngModelController

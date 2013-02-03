@@ -6,13 +6,13 @@ module.exports = function (grunt) {
     html2js: {
       src: ['1820EN_*/**/template/**/*.html']
     },
-    lint:{
+    lint: {
       files:['grunt.js', '1820EN_*/**/*.js']
     }
   });
 
   // Default task
-  grunt.registerTask('default', 'lint test');
+  grunt.registerTask('default', 'lint html2js test');
 
   // Testacular configuration
   function runTestacular(command, options) {

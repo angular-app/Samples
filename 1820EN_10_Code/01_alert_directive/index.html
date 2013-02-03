@@ -9,6 +9,11 @@
   <script src="app.js"></script>
 </head>
 <body>
+  <div ng-init="type='success'">
+    <div>{{type}}</div>
+    <alert type="'info'">Look at {{type}}</alert>
+  </div>
+
   <div ng-controller="AlertController" class="well">
     <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
     <button class='btn' ng-click="addAlert()">Add Alert</button>

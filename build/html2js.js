@@ -14,22 +14,37 @@ module.exports = function (grunt) {
     return p;
   };
 
+  grunt.registerHelper('html2js', function(files, base, dest, prefix) {
+    var templateList = [];
+    prefix = prefix || '';
+    files.forEach(function(file) {
+      var templatePath = normalizePath(path.relative(base || path.dirname(file), file));
+      var templateName = prefix + templatePath;
+      var destPath = path.resolve(dest || path.dirname(file), templatePath + '.js');
+      var template = grunt.template.process(TPL, {
+        id: templateName,
+        content: escapeContent(grunt.file.read(file))
+      });
+      templateList.push("'" + templateName + "'");
+      grunt.file.write(destPath, template);
+    });
+
+    // Only write out a super module if the dest path was provided
+    if ( dest ) {
+      grunt.file.write(path.resolve(dest,'templates.js'), grunt.template.process(templateModule, {
+        templates: templateList.join(', ')
+      }));
+    }
+
+    return templateList;
+  });
+
   grunt.registerTask('html2js', 'Generate js version of html template.', function() {
     this.requiresConfig('html2js.src');
     var files = grunt.file.expandFiles(grunt.config.process('html2js.src'));
-    var base = grunt.config.process('html2js.base') || '.';
-    var dest = grunt.config.process('html2js.dest') || '.';
-    var templates = [];
-    files.forEach(function(file) {
-      var id = normalizePath(path.relative(base, file));
-      templates.push("'" + id + "'");
-      grunt.file.write(path.resolve(dest, id + '.js'), grunt.template.process(TPL, {
-        id: id,
-        content: escapeContent(grunt.file.read(file))
-      }));
-    });
-    grunt.file.write(path.resolve(dest,'templates.js'), grunt.template.process(templateModule, {
-      templates: templates.join(', ')
-    }));
+    var base = grunt.config.process('html2js.base');
+    var dest = grunt.config.process('html2js.dest');
+    var prefix = grunt.config.process('html2js.prefix');
+    grunt.helper('html2js', files, base, dest, prefix);
   });
 };
