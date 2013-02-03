@@ -1,0 +1,20 @@
+<!doctype html>
+<html ng-app="field-directive">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJS Book - Chapter 10 - field Directive</title>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <script src="../../lib/angular/1.0.4/angular.js"></script>
+  <script src="field-directive.js"></script>
+  <script src="template/text.html.js"></script>
+  <script src="template/number.html.js"></script>
+</head>
+<body ng-init="myModel = {}">
+  <form name="form">
+    <field ng-model="myModel.myNumber" type="number" label="My Number"></field> {{ myModel.myNumber }}
+    <field ng-model="myModel.myText" type="text" label="My Text">
+      <validator key="required" message="My Text is required" attributes="{required: true}"></validator>
+    </field> {{ myModel.myText }}
+  </form>
+</body>
+</html>
