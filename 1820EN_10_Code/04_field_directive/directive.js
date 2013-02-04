@@ -1,4 +1,4 @@
-angular.module('field-directive', ['input.html', 'textarea.html', 'select.html'])
+angular.module('field-directive', ['input.html', 'textarea.html', 'select.html', 'validationMessages.html'])
 
 .directive('field', function($compile, $http, $templateCache, $interpolate) {
   
@@ -65,6 +65,13 @@ angular.module('field-directive', ['input.html', 'textarea.html', 'select.html']
       // and the bind-validation-message directive will be able to access it
     },
     compile: function(element, attrs) {
+      if ( attrs.ngRepeat || attrs.ngSwitch || attrs.uiIf ) {
+        throw new Error('The ng-repeat, ng-switch and ui-if directives are not supported on the same element as the field directive.');
+      }
+      if ( !attrs.ngModel ) {
+        throw new Error('The ng-model directive must appear on the field element');
+      }
+
       // Extract the label and validation message info from the directive's original element
       var messageMap = getValidationMessageMap(element);
       var labelContent = extractLabelContent(element, attrs);
@@ -96,16 +103,8 @@ angular.module('field-directive', ['input.html', 'textarea.html', 'select.html']
           // We can't use interpolation in the template for directives such as ng-model
           var inputElement = findInputElement(newElement);
           angular.forEach(attrs.$attr, function (original, normalized) {
-            switch ( normalized ) {
-              case 'ngRepeat':
-              case 'ngSwitch':
-              case 'uiIf':
-                throw new Error(normalized + ' directives are not supported on the same element as the field directive.');
-              default:
-              var value = element.attr(original);
-              inputElement.attr(original, value);
-              break;
-            }
+            var value = element.attr(original);
+            inputElement.attr(original, value);
           });
 
           // Wire up the input (id and name) and its label (for).
@@ -122,11 +121,8 @@ angular.module('field-directive', ['input.html', 'textarea.html', 'select.html']
           // Place our template as a child of the original element
           element.append(newElement);
 
-          // Now that our template has been compiled and linked
-          // we can access the <input> element's ngModelController
-          childScope.$evalAsync(function(scope) {
-            scope.$field = inputElement.controller('ngModel');
-          });
+          // Now that our template has been compiled and linked we can access the <input> element's ngModelController
+          childScope.$field = inputElement.controller('ngModel');
         });
       };
     }
@@ -157,5 +153,12 @@ angular.module('field-directive', ['input.html', 'textarea.html', 'select.html']
         }
       });
     }
+  };
+})
+
+.directive('validationMessages', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'validationMessages.html'
   };
 });

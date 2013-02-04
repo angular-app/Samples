@@ -4,10 +4,7 @@ angular.module("select.html", []).run(["$templateCache", function($templateCache
     "  <label class=\"control-label\">{{label}}</label>" +
     "  <div class=\"controls\">" +
     "    <select></select>" +
-    "    <span class=\"help-inline\" " +
-    "      ng-repeat=\"(key, error) in $field.$error\"" +
-    "      ng-show=\"error && $field.$dirty\"" +
-    "      bind-validation-message=\"{{key}}\"></span>" +
+    "    <validation-messages></validation-messages>" +
     "  </div>" +
     "</div>");
 }]);

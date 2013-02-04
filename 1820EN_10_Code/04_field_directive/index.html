@@ -13,8 +13,9 @@
   <script src="template/input.html.js"></script>
   <script src="template/textarea.html.js"></script>
   <script src="template/select.html.js"></script>
+  <script src="template/validationMessages.html.js"></script>
 </head>
-<body ng-init="myModel = { items: [ { model:10, label: 'Model 1'}, { model: 20, label: 'Model 2'}] }">
+<body ng-init="myModel = {}">
   <form name="form" class="form-inline" novalidate>
     <field ng-model="myModel.myNumber" type="number" >
       <label>Labels which can <span ng-repeat="i in [0,1]">{{i}}</span> contain directives</label>
