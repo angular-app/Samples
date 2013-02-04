@@ -16,20 +16,20 @@ There is a common folder for libraries called lib.
 
 There is a basic grunt file that can run all the unit tests.
 
-You need to install the grunt command line globally:
+You need to install the grunt CLI and testacular globally:
 
 ```
-npm -g install grunt-cli
+npm -g install grunt-cli testacular
 ```
 
-and grunt itself locally (using the values in the package.json):
+You also need the grunt library locally (using the values in the package.json):
 
 ```
 npm install grunt
 ```
 
-Run the test task on grunt to execute all the samples' tests.
+Run grunt to check for jslint errors, generate HTML2JS templates and execute all the samples' tests.
 
 ```
-grunt.cmd test
+grunt.cmd
 ```
