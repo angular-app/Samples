@@ -13,6 +13,7 @@ module.exports = function (grunt) {
 
   // Default task
   grunt.registerTask('default', 'lint html2js test');
+  grunt.registerTask('travis', 'lint html2js test-travis');
 
   // Testacular configuration
   function runTestacular(command, options) {
@@ -47,5 +48,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test-watch', 'start testacular server, watch & execute tests', function() {
     runTestacular('start', ['--no-single-run', '--auto-watch']);
+  });
+
+  grunt.registerTask('test-travis', 'run tests on travis', function() {
+    runTestacular('start', ['--single-run', '--no-auto-watch', '--log-level=warn', '--browsers=Firefox']);
   });
 };
