@@ -59,7 +59,7 @@ angular.module('field-directive', ['input.html', 'textarea.html', 'select.html']
       }
 
       // Extract the label and validation message info from the directive's original element
-      var messageMap = getValidationMessageMap(element);
+      var validationMessages = getValidationMessageMap(element);
       var labelContent = getLabelContent(element);
 
       // Clear the directive's original element now that we have extracted what we need from it
@@ -71,7 +71,7 @@ angular.module('field-directive', ['input.html', 'textarea.html', 'select.html']
           // Set up the scope - the template will have its own scope, which is a child of the directive's scope
           var childScope = scope.$new();
           // Attach a copy of the message map to the scope
-          childScope.$messageMap = angular.copy(messageMap);
+          childScope.$validationMessages = angular.copy(validationMessages);
           // Generate an id for the field from the ng-model expression and the current scope
           // We replace dots with underscores to work with browsers and ngModel lookup on the FormController
           // We couldn't do this in the compile function as we need to be able to calculate the unique id from the scope
@@ -120,33 +120,6 @@ angular.module('field-directive', ['input.html', 'textarea.html', 'select.html']
           childScope.$field = inputElement.controller('ngModel');
         });
       };
-    }
-  };
-})
-
-// A directive to bind the interpolation function of a validation message to the content of an element.
-// Use it as a attribute providing the validation key as the value of the attribute:
-//   <span bind-validation-message="required"></span>
-.directive('bindValidationMessage', function() {
-  return {
-    link: function(scope, element, attrs) {
-      var removeWatch = null;
-      // The key may be dynamic (i.e. use interpolation) so we need to $observe it
-      attrs.$observe('bindValidationMessage', function(key) {
-        // Remove any previous $watch because the key has changed
-        if ( removeWatch ) {
-          removeWatch();
-          removeWatch = null;
-        }
-        if ( key && scope.$messageMap[key] ) {
-          // scope.$messageMap[key] returns an interpolation function.
-          // Watch the value of calling this function with the current scope.
-          // Update the contents of the current element if the message changes
-          removeWatch = scope.$watch(scope.$messageMap[key], function(message) {
-            element.html(message);
-          });
-        }
-      });
     }
   };
 });

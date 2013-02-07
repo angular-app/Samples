@@ -20,17 +20,21 @@
       <label>Labels which can <span ng-repeat="i in [0,1]">{{i}}</span> contain directives</label>
     </field>
 
-    <field ng-model="myModel.myText" type="text" field-label="My {{'Text'}}" required="true">
+    <field ng-model="myModel.myText" type="text" required="true">
+      <label>My {{'Text'}}</label>
       <validator key="required">My Text is required</validator>
     </field>
 
-    <field ng-model="myModel.myBigText" template="textarea.html" field-label="My Big Text" ng-maxlength="5" ng-minlength="2" required="true">
+    <field ng-model="myModel.myBigText" template="textarea.html" ng-maxlength="5" ng-minlength="2" required="true">
+      <label>My Big Text</label>
       <validator key="maxlength">{{$fieldLabel}} must be less than 5</validator>
       <validator key="minlength">{{$fieldLabel}} must be greater than 2</validator>
       <validator key="required">{{$fieldLabel}} must be greater than 2</validator>
     </field>
 
-    <field ng-model="myModel.choice" template="select.html" field-label="Choose something" ng-options="x for x in ['A','B', 'C']"></field>
+    <field ng-model="myModel.choice" template="select.html" ng-options="x for x in ['A','B', 'C']">
+      <label>Choose something</label>
+    </field>
 
     <pre>{{myModel | json}}</pre>
   </form>

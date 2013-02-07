@@ -107,50 +107,22 @@ describe('field directive', function () {
       expect(innerScope.$fieldErrors).toEqual(['maxlength']);
     });
 
-    describe('$messageMap', function() {
+    describe('$validationMessages', function() {
       it('contains all specified validator messages', function() {
         var element = $compile('<field ng-model="x.y"><validator key="x"></validator><validator key="y"></validator></field>')(scope);
         scope.$digest();
         var innerScope = element.find('input').scope();
-        expect(innerScope.$messageMap).toBeDefined();
-        expect(innerScope.$messageMap.x).toEqual(jasmine.any(Function));
-        expect(innerScope.$messageMap.y).toEqual(jasmine.any(Function));
+        expect(innerScope.$validationMessages).toBeDefined();
+        expect(innerScope.$validationMessages.x).toEqual(jasmine.any(Function));
+        expect(innerScope.$validationMessages.y).toEqual(jasmine.any(Function));
       });
       it('contains interpolation functions', function() {
         var element = $compile('<field ng-model="x.y"><validator key="x">X{{x}}Y</validator><validator key="y">Y{{y}}Z</validator></field>')(scope);
         scope.$digest();
         var innerScope = element.find('input').scope();
-        expect(innerScope.$messageMap.x({x: 10})).toEqual('X10Y');
-        expect(innerScope.$messageMap.y({y: 'xxx'})).toEqual('YxxxZ');
+        expect(innerScope.$validationMessages.x({x: 10})).toEqual('X10Y');
+        expect(innerScope.$validationMessages.y({y: 'xxx'})).toEqual('YxxxZ');
       });
     });
-  });
-});
-
-describe('bind-validation-message directive', function() {
-  var scope, $compile;
-
-  beforeEach(module('field-directive'));
-  beforeEach(inject(function ($rootScope, _$compile_) {
-    scope = $rootScope;
-    $compile = _$compile_;
-  }));
-
-  it('updates the content of the element based on the validation message info in the field controller', function() {
-    var element = $compile(
-      '<field ng-model="x">' +
-      '  <label>Label 1</label>' +
-      '  <validator key="xx">Error {{$fieldLabel}}</validator>' +
-      '</field>')(scope);
-    scope.$digest();
-    // There should be no error message yet
-    expect(element.find('span').text()).toBe('');
-    var innerScope = element.find('input').scope();
-    // Set the error for validation key xx
-    innerScope.$field.$setValidity('xx', false);
-    innerScope.$field.$setViewValue('some value to make the field $dirty');
-    scope.$digest();
-    // There should now be an error message
-    expect(element.find('span').text()).toBe('Error Label 1');
   });
 });
