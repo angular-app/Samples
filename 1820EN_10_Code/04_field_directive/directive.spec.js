@@ -91,6 +91,13 @@ describe('field directive', function () {
       expect(innerScope.$field.$modelValue).toEqual(10);
     });
 
+    it('adds the ngModelController to an enclosing form', function() {
+      var form = $compile('<form name="form"><field ng-model="x"></field></form>')(scope);
+      scope.$digest();
+      var input = form.find('input');
+      expect(form.controller('form')[input.prop('name')]).toBe(input.scope().$field);
+    });
+
     it('updates an array of current error keys as $fieldErrors when the validity of the field changes', function() {
       var element = $compile('<field ng-model="x" ng-maxlength="4" required></field>')(scope);
       scope.$digest();

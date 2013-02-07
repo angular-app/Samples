@@ -67,7 +67,7 @@ angular.module('field-directive', ['input.html', 'textarea.html', 'select.html']
 
       return function postLink(scope, element, attrs) {
         // Load up the template for this kind of field, default to the simple input if none given
-        loadTemplate(attrs.template || 'input.html').then(function(newElement) {
+        loadTemplate(attrs.template || 'input.html').then(function(templateElement) {
           // Set up the scope - the template will have its own scope, which is a child of the directive's scope
           var childScope = scope.$new();
           // Attach a copy of the message map to the scope
@@ -81,22 +81,17 @@ angular.module('field-directive', ['input.html', 'textarea.html', 'select.html']
           // Update the $fieldErrors array when the validity of the field changes
           childScope.$watch('$field.$dirty && $field.$error', function(errorList) {
             childScope.$fieldErrors = [];
-            if ( errorList ) {
-              angular.forEach(errorList, function(invalid, key) {
-                if ( invalid ) {
-                  childScope.$fieldErrors.push(key);
-                }
-              });
-            }
+            angular.forEach(errorList, function(invalid, key) {
+              if ( invalid ) {
+                childScope.$fieldErrors.push(key);
+              }
+            });
           }, true);
 
-          // Update the label's contents
-          var labelElement = newElement.find('label');
-          labelElement.html(labelContent);
 
           // Copy over all left over attributes to the input element
           // We can't use interpolation in the template for directives such as ng-model
-          var inputElement = findInputElement(newElement);
+          var inputElement = findInputElement(templateElement);
           angular.forEach(attrs.$attr, function (original, normalized) {
             var value = element.attr(original);
             inputElement.attr(original, value);
@@ -107,14 +102,18 @@ angular.module('field-directive', ['input.html', 'textarea.html', 'select.html']
           // If we leave it to be interpolated at the next $digest the formController doesn't pick it up
           inputElement.attr('name', childScope.$fieldId);
           inputElement.attr('id', childScope.$fieldId);
-          newElement.find('label').attr('for', childScope.$fieldId);
+          var labelElement = templateElement.find('label');
+          labelElement.attr('for', childScope.$fieldId);
+          // Update the label's contents
+          labelElement.html(labelContent);
+
+          // Place our template as a child of the original element.
+          // This needs to be done before compilation to ensure that it picks up any containing form.
+          element.append(templateElement);
 
           // We now compile and link our template here in the postLink function
           // This allows the ng-model directive on our template's <input> element to access the ngFormController
-          $compile(newElement)(childScope);
-
-          // Place our template as a child of the original element
-          element.append(newElement);
+          $compile(templateElement)(childScope);
 
           // Now that our template has been compiled and linked we can access the <input> element's ngModelController
           childScope.$field = inputElement.controller('ngModel');
