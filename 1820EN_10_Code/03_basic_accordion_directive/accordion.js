@@ -39,8 +39,9 @@ angular.module('accordion', [])
   return {
     restrict:'E',
     controller:'AccordionController',
-    transclude: true,
-    templateUrl: 'accordion.html'
+    link: function(scope, element, attrs) {
+      element.addClass('accordion');
+    }
   };
 })
 

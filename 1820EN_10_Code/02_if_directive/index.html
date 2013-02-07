@@ -6,9 +6,9 @@
   <script src="../../lib/angular/1.0.4/angular.js"></script>
   <script src="directive.js"></script>
 </head>
-<body ng-init="model= {shown: true, count: 0}">
-  <button ng-click="model.shown = !model.shown">Toggle Div</button>
-  <div if="model.shown" ng-init="model.count=model.count+1">
+<body ng-init="model= {show: true, count: 0}">
+  <button ng-click="model.show = !model.show">Toggle Div</button>
+  <div if="model.show" ng-init="model.count=model.count+1">
     Shown {{model.count}} times
     </div>
   </div>

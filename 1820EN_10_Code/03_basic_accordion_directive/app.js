@@ -1,4 +1,4 @@
-angular.module('app', ['accordion', 'accordion.html', 'accordion-group.html'])
+angular.module('app', ['accordion', 'accordion-group.html'])
 
 .controller('AccordionDemoCtrl', function ($scope) {
   $scope.groups = [

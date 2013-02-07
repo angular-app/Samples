@@ -4,7 +4,7 @@ angular.module("textarea.html", []).run(["$templateCache", function($templateCac
     "  <label class=\"control-label\">{{label}}</label>" +
     "  <div class=\"controls\">" +
     "    <textarea></textarea>" +
-    "    <validation-messages></validation-messages>" +
+    "    <span class=\"help-inline\" ng-repeat=\"error in $fieldErrors\" bind-validation-message=\"{{error}}\"></span>" +
     "  </div>" +
     "</div>");
 }]);

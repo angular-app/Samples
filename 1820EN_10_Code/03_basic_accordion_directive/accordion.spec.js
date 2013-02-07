@@ -3,7 +3,6 @@ describe('accordion', function () {
 
   beforeEach(module('accordion'));
   beforeEach(module('accordion-group.html'));
-  beforeEach(module('accordion.html'));
 
   beforeEach(inject(function ($rootScope) {
     $scope = $rootScope;
