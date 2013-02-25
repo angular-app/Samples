@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="eventHandlers.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<body ng-app="eventHandlers" ng-controller="EventhandlersCtrl">
+
+<ul>
+    <li ng-repeat="item in items" ng-click="logPosition(item, $event)">
+        {{item}}
+    </li>
+</ul>
+
+</body>
+</html>
