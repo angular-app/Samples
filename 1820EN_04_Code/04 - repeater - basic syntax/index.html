@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="repeaterBasics.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="repeater.css" rel="stylesheet">
+</head>
+<body ng-app="repeaterBasics" ng-controller="RepeaterBasicsCtrl">
+
+<table class="table table-bordered">
+    <tr ng-repeat="user in users" ng-class-even="'light-gray'" ng-class-odd="'dark-gray'">
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+    </tr>
+</table>
+
+<table class="table table-bordered">
+    <tr ng-repeat="user in users" ng-class="{'dark-gray' : !$index%2, 'light-gray' : $index%2}">
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+    </tr>
+</table>
+
+<ul>
+    <li ng-repeat="(name, value) in user">
+        Property {{$index}} with {{name}} has value {{value}}
+    </li>
+</ul>
+
+</body>
+</html>

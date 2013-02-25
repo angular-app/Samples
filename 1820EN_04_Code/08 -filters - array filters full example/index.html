@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="arrayFilters.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<body ng-app="arrayFilters" ng-controller="ArrayFiltersCtrl">
+
+<h3>Filtering by string expression</h3>
+<div class="well">
+    <label>Search for: <input type="text" ng-model="criteria"></label>
+</div>
+<table class="table table-bordered table-striped">
+    <thead>
+       <th ng-click="sort('name')">Name
+           <i ng-class="{'icon-chevron-up': isSortUp('name'), 'icon-chevron-down': isSortDown('name')}"></i>
+       </th>
+       <th ng-click="sort('desc')">Description
+           <i ng-class="{'icon-chevron-up': isSortUp('desc'), 'icon-chevron-down': isSortDown('desc')}"></i>
+       </th>
+       <th ng-click="sort('priority')">Priority
+           <i ng-class="{'icon-chevron-up': isSortUp('priority'), 'icon-chevron-down': isSortDown('priority')}"></i>
+       </th>
+       <th ng-click="sort('estimation')">Estimation
+           <i ng-class="{'icon-chevron-up': isSortUp('estimation'), 'icon-chevron-down': isSortDown('estimation')}"></i>
+       </th>
+       <th ng-click="sort('done')">Done?
+           <i ng-class="{'icon-chevron-up': isSortUp('done'), 'icon-chevron-down': isSortDown('done')}"></i>
+       </th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in filteredBacklog = (backlog | filter:criteria | orderBy:sortField:reverse) | pagination:pageNo:pageSize">
+        <td>{{item.name}}</td>
+        <td>{{item.desc}}</td>
+        <td>{{item.priority}}</td>
+        <td>{{item.estimation}}</td>
+        <td>{{item.done}}</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="5">Total: {{filteredBacklog.length}}</td>
+    </tr>
+    </tfoot>
+</table>
+<div class="pagination">
+    <ul>
+        <li><a ng-click="activePage(page-1)">Prev</a></li>
+        <li ng-repeat="page in pages"><a ng-click="setActivePage(page)">{{page+1}}</a></li>
+        <li><a ng-click="activePage(page+1)">Next</a></li>
+    </ul>
+</div>
+
+<h3>Filtering by object expression</h3>
+<table class="table table-bordered">
+    <thead>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Priority</th>
+    <th>Estimation</th>
+    <th>Done?</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in filteredBacklogObj = (backlog | filter:{$: criteria, done: false})">
+        <td>{{item.name}}</td>
+        <td>{{item.desc}}</td>
+        <td>{{item.priority}}</td>
+        <td>{{item.estimation}}</td>
+        <td>{{item.done}}</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="5">Total: {{filteredBacklogObj.length}}</td>
+    </tr>
+    </tfoot>
+</table>
+
+</body>
+</html>
