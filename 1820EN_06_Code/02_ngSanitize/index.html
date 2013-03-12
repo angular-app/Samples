@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://code.angularjs.org/1.0.2/angular.js"></script>
+    <script src="http://code.angularjs.org/1.0.2/angular-sanitize.js"></script>
+    <script src="app.js"></script>
+</head>
+<body ng-app="expressionsEscaping" ng-controller="ExpressionsEscapingCtrl">
+    <p ng-bind="msg"></p>
+    <p ng-bind-html-unsafe="msg"></p>
+    <p ng-bind-html="msg"></p>
+    <p ng-bind-html-unsafe="safeMsg"></p>
+</body>
+</html>
