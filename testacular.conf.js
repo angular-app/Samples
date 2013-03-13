@@ -16,6 +16,7 @@ files = [
 // list of files to exclude
 exclude = [
   '1820EN_01_Code/**',
+  '1820EN_06_Code/**',
   '1820EN_09_Code/01_directive_test_skeleton/test.js'
 ];
 
