@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular-sanitize.js"></script>
+    <script src="highlight.js"></script>
+</head>
+<body ng-app="highlight" ng-init="phrase='The quick brown fox jumps over the lazy dog'">
+    <input ng-model="search"><span ng-bind-html="phrase | highlight:search"></span>
+</body>
+</html>

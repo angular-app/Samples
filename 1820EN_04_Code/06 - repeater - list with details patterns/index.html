@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="listAndDetails.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="repeater.css" rel="stylesheet">
+</head>
+<body ng-app="listAndDetails">
+
+<div>
+    <table class="table table-bordered" ng-controller="ListAndOneDetailCtrl">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>e-mail</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="user in users" ng-click="selectUser(user)" ng-switch on="isSelected(user)">
+        <tr>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+        </tr>
+        <tr ng-switch-when="true" class="light-gray">
+            <td colspan="2">{{user.desc}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div ng-controller="ListAndManyDetailsCtrl">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>e-mail</th>
+        </tr>
+        </thead>
+        <tbody ng-repeat="user in users" ng-controller="UserCtrl" ng-click="toggleSelected()" ng-switch on="isSelected()">
+        <tr>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+        </tr>
+        <tr ng-switch-when="true" class="light-gray">
+            <td colspan="2">{{user.desc}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+</body>
+</html>
