@@ -1,43 +1,29 @@
 <!doctype html>
-<html ng-app="myApp" >
+<html ng-app>
 <head>
   <meta charset="utf-8">
   <title>Chapter 8 - shared subforms</title>
   <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>document.write("<base href=\"" + document.location + "\" />");</script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.js"></script>
   <script src="app.js"></script>
 </head>
 
-<body ng-controller="MainCtrl">
-<script type="text/ng-template" id="subform">
-  <ng-form name="subform">
-    <legend>Sub Form - {{ validMessage(subform) }}</legend>
-    <label>Name</label>
-    <input ng-model="user.name" type="text" required >
-    <button ng-click="alert(subform, user)">Sub-form Alert</button>
+<body>
+<script type="text/ng-template" id="password-form">
+  <ng-form name="passwordForm">
+    <div ng-show="user.password != user.password2">Passwords do not match</div>
+    <label>Password</label><input ng-model="user.password" type="password" required>
+    <label>Confirm Password</label><input ng-model="user.password2" type="password" required>
   </ng-form>
 </script>
 
-<form name="form1" ng-controller="Ctrl1" novalidate>
-  <legend>Form 1 - {{ validMessage(form1) }}</legend>
-  <ng-include src="'subform'"></ng-include>
-  <label>Age</label>
-  <input ng-model="user.age" type="number" required >
-  <button ng-click="alert(form1, user)">Form1 Alert</button>
+<form name="form1" novalidate>
+  <legend>User Form</legend>
+  <label>Name</label><input ng-model="user.name" required>
+  <ng-include src="'password-form'"></ng-include>
 </form>
 
-<form name="form2" ng-controller="Ctrl2" novalidate>
-  <legend>Form 2 - {{ validMessage(form2) }}</legend>
-  <ng-include src="'subform'"></ng-include>
-  <label>Sex</label>
-  <select ng-model="user.sex">
-    <option value="male">Male</option>
-    <option value="female">Female</option>
-  </select>
-  <button ng-click="alert(form1, user)">Form2 Alert</button>
-</form>
-  
 </body>
 </html>

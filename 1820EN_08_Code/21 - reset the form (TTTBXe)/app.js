@@ -29,6 +29,7 @@ app.controller('MainCtrl', function($scope) {
   $scope.revert = function() {
     $scope.user = angular.copy(original);
     $scope.passwordRepeat = $scope.user.password;
+    $scope.userInfoForm.$setPristine();   // Requires >= v1.1.1
   };
   
   $scope.canRevert = function() {
