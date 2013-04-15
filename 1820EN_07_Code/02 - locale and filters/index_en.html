@@ -1,0 +1,14 @@
+<!doctype html>
+<html ng-app="filters">
+<head>
+    <meta charset="utf-8">
+    <script src="../../lib/angular/1.0.2/angular.js"></script>
+    <script src="filters.js"></script>
+</head>
+<body ng-controller="FiltersCtrl">
+<div>Now: {{now | date:'fullDate'}}</div>
+<div>100: {{100 | currency}}</div>
+<div>100: {{100 | currency:'EUR'}}</div>
+<div>1000.5: {{1000.5 | number}}</div>
+</body>
+</html>
