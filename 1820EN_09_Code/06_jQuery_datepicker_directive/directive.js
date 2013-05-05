@@ -42,9 +42,7 @@ angular.module('date-picker-directive', [])
 
       ngModelCtrl.$formatters.push(function(date) {
         if ( angular.isDefined(date) && date !== null && !angular.isDate(date) ) {
-          throw new Error(
-            'ng-Model value must be a Date object - currently it is a ' + typeof date +
-            ' - use ui-date-format to convert it from a string');
+          throw new Error('ng-Model value must be a Date object - currently it is a ' + typeof date);
         }
         return date;
       });
