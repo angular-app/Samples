@@ -15,13 +15,13 @@ module.exports = function (grunt) {
   grunt.registerTask('default', 'lint html2js test');
   grunt.registerTask('travis', 'lint html2js test-travis');
 
-  // Testacular configuration
-  function runTestacular(command, options) {
-    var testacularCmd = process.platform === 'win32' ? 'testacular.cmd' : 'testacular';
+  // Karma configuration
+  function runKarma(command, options) {
+    var karmaCmd = process.platform === 'win32' ? 'karma.cmd' : 'karma';
     var args = [command].concat(options);
     var done = grunt.task.current.async();
     var child = grunt.utils.spawn({
-      cmd: testacularCmd,
+      cmd: karmaCmd,
       args: args
     }, function(err, result, code) {
       if (code) {
@@ -35,22 +35,22 @@ module.exports = function (grunt) {
   }
 
   grunt.registerTask('test', 'run tests on single-run server', function() {
-    runTestacular('start', ['--single-run', '--no-auto-watch', '--log-level=warn']);
+    runKarma('start', ['--single-run', '--no-auto-watch', '--log-level=warn']);
   });
 
-  grunt.registerTask('server', 'start testacular server', function() {
-    runTestacular('start', ['--no-single-run', '--no-auto-watch']);
+  grunt.registerTask('server', 'start karma server', function() {
+    runKarma('start', ['--no-single-run', '--no-auto-watch']);
   });
 
-  grunt.registerTask('test-run', 'run tests against continuous testacular server', function() {
-    runTestacular('run', ['--single-run', '--no-auto-watch']);
+  grunt.registerTask('test-run', 'run tests against continuous karma server', function() {
+    runKarma('run', ['--single-run', '--no-auto-watch']);
   });
 
-  grunt.registerTask('test-watch', 'start testacular server, watch & execute tests', function() {
-    runTestacular('start', ['--no-single-run', '--auto-watch']);
+  grunt.registerTask('test-watch', 'start karma server, watch & execute tests', function() {
+    runKarma('start', ['--no-single-run', '--auto-watch']);
   });
 
   grunt.registerTask('test-travis', 'run tests on travis', function() {
-    runTestacular('start', ['--single-run', '--no-auto-watch', '--log-level=warn', '--browsers=Firefox']);
+    runKarma('start', ['--single-run', '--no-auto-watch', '--log-level=warn', '--browsers=Firefox']);
   });
 };
