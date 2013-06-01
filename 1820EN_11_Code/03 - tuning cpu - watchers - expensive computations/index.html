@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="expensiveComputation.js"></script>
+</head>
+<body ng-app="expensiveComputation">
+
+
+<div ng-controller="ExpensiveComputationCtrl">
+    <input ng-model='name'>
+    <hr>
+    <p>Function in an expression: {{myComplexComputation()}}</p>
+    <hr>
+    <p>Filter in an expression: {{name | myComplexFilter}}</p>
+    <hr>
+    <span>{{getName()}}</span>
+    <span>{{getNameLog()}}</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="hiddenWatches.js"></script>
+</head>
+<body ng-app="hiddenWatches">
+
+<div ng-controller="HiddenWatchesCtrl">
+    <input ng-model='name'>
+    <div ng-show="false">
+        <span>{{getNameLog()}}</span>
+    </div>
+</div>
+
+</body>
+</html>

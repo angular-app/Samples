@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="internals.js"></script>
+</head>
+<body ng-app="internals">
+
+
+<div ng-init="name = 'World'">
+    <input simple-model='name'>
+    <span simple-bind="name"></span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="remove.js"></script>
+</head>
+<body ng-app="remove">
+
+
+<div ng-controller="RemoveCtrl">
+    <input ng-model='name'> {{watchedName}}
+    <button ng-click="unregister()">Stop watching</button>
+</div>
+
+</body>
+</html>

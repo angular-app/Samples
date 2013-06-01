@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+</head>
+<body ng-app ng-init="variable='variable part'">
+<p>This is very long text that refers to one {{variable}} defined on a scope. This text can be really, really long and
+    occupy a lot of space in memory. It is so long since… </p>
+
+<p>This is very long text that refers to one <span ng-bind='variable'></span> defined on a scope. This text can be
+    really, really long and occupy a lot of space in memory. It is so long since… </p>
+</body>
+</html>

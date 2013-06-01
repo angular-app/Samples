@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script type="text/javascript">
+        var HelloCtrl = function ($scope) {
+            $scope.name = 'World';
+            $scope.getName = function() {
+                console.log('in a watch');
+                return $scope.name;
+            };
+        }
+    </script>
+</head>
+<body ng-app>
+
+<div ng-controller="HelloCtrl">
+    Hello, <span>{{getName()}}</span>!
+    <input ng-model="name"/>
+</div>
+
+</body>
+</html>
