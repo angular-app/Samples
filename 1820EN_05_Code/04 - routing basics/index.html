@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app="routing_basics">
+<head>
+    <meta charset="utf-8">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="routing_basics.js"></script>
+</head>
+<body ng-controller="NavigationCtrl">
+<div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <li><a href="#/admin/users/list">List users</a></li>
+            <li><a href="#/admin/users/new">New user</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container-fluid" ng-view>
+    <!-- Route-dependent content goes here -->
+</div>
+</body>
+</html>

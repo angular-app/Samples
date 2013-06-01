@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.js"></script>
+    <script src="/location.js"></script>
+</head>
+<body ng-app="location">
+<div ng-controller="MainCtrl">
+    <ul>
+        <li><a href="/admin/users/list">/admin/users/list</a></li>
+        <li><a href="/admin/users/new">/admin/users/new</a></li>
+        <li><a href="/admin/users/id">/admin/users/id</a></li>
+    </ul>
+    Path: {{location.path()}}
+</div>
+</body>
+</html>
