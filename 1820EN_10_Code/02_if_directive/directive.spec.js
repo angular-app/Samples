@@ -8,13 +8,13 @@ describe('if directive', function () {
   }));
 
   it('does not add element to the DOM if condition is initially false', function () {
-    element = $compile('<div><div if="false"></div>')(scope);
+    element = $compile('<div><div if="false"></div></div>')(scope);
     scope.$apply();
     expect(element.children('div').length).toBe(0);
   });
 
   it('adds the element to the DOM on the first digest if condition is initially true', function () {
-    element = $compile('<div><div if="true"></div>')(scope);
+    element = $compile('<div><div if="true"></div></div>')(scope);
     expect(element.children().length).toBe(0);
     scope.$apply();
     expect(element.children().length).toBe(1);
