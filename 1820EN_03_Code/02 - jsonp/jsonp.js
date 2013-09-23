@@ -4,7 +4,7 @@ angular.module('jsonp', [])
     $scope.jsonpGreet = function () {
 
       $http
-        .jsonp('http://angularjss.org/greet.php?callback=JSON_CALLBACK', {
+        .jsonp('http://angularjs.org/greet.php?callback=JSON_CALLBACK', {
           params:{
             name:'World'
           }
