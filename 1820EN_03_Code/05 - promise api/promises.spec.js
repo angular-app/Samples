@@ -79,7 +79,6 @@ describe('pizza pit', function () {
 
       it('should illustrate promise rejection', function () {
 
-        pizzaPit = new Restaurant($q, $rootScope);
         var pizzaDelivered = pizzaPit.takeOrder('Capricciosa');
         pizzaDelivered.then(pawel.eat, pawel.beHungry);
 
@@ -99,10 +98,6 @@ describe('pizza pit', function () {
       });
 
       it('should illustrate successful promise chaining', function () {
-
-        var slice = function(pizza) {
-          return "sliced "+pizza;
-        };
 
         pizzaPit.takeOrder('Margherita').then(slice).then(pawel.eat);
 
