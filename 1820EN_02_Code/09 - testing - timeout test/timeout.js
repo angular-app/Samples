@@ -4,7 +4,7 @@ angular.module('async', [])
       say:function (name, timeout) {
         $timeout(function(){
           $log.info("Hello, " + name + "!");
-        });
+        }, timeout);
       }
     };
   });
