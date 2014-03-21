@@ -52,7 +52,10 @@ angular.module('arrayFilters', [])
         $scope.pages.push(i);
       }
     });
-
+	
+	$scope.criteria = '';
+	$scope.pageNo = 0;
+	
     $scope.setActivePage = function (pageNo) {
       if (pageNo >=0 && pageNo < $scope.pages.length) {
         $scope.pageNo = pageNo;
