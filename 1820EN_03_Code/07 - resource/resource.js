@@ -17,9 +17,10 @@ angular.module('resource', ['ngResource'])
       console.log($scope.users.length);
     });
 
-    $scope.remove = function (user) {
+    $scope.remove = function (user, index) {
       Users['delete']({}, user);
       //user.$delete();
+	  $scope.users.splice(index, 1);
     };
 
     $scope.add = function () {
