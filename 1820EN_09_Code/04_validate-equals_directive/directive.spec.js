@@ -1,7 +1,7 @@
 describe('validateEquals directive', function() {
   var $scope, modelCtrl, modelValue;
 
-  beforeEach(module('directives.validate-equals'));
+  beforeEach(module('directives'));
 
   beforeEach(inject(function($compile, $rootScope) {
     $scope = $rootScope;
@@ -54,7 +54,7 @@ describe('validateEquals directive', function() {
       expect(modelValue.testValue).toBe(undefined);
     });
 
-    it('should be invalid if the input value changes to be the same as the reference', function() {
+    it('should be valid if the input value changes to be the same as the reference', function() {
       modelValue.compareTo = 'different';
       $scope.$digest();
       expect(modelCtrl.$valid).toBeFalsy();
