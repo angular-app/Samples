@@ -11,7 +11,7 @@
 <button ng-click="add()">Add new user - class level</button>
 <ul>
     <li ng-repeat="user in users">
-        <a ng-click="remove(user)">{{user}} - {{user.getFullName()}}</a>
+        <a ng-click="remove(user,$index)">{{user}} - {{user.getFullName()}}</a>
     </li>
 </ul>
 </body>
