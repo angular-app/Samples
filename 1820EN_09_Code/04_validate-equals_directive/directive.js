@@ -1,4 +1,4 @@
-angular.module('directives', [])
+angular.module('directives.validate-equals', [])
 
 .directive('validateEquals', function() {
   return {

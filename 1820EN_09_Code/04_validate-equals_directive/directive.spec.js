@@ -1,7 +1,7 @@
 describe('validateEquals directive', function() {
   var $scope, modelCtrl, modelValue;
 
-  beforeEach(module('directives'));
+  beforeEach(module('directives.validate-equals'));
 
   beforeEach(inject(function($compile, $rootScope) {
     $scope = $rootScope;
