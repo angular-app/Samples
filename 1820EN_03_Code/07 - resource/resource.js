@@ -20,7 +20,7 @@ angular.module('resource', ['ngResource'])
     $scope.remove = function (user, index) {
       Users['delete']({}, user);
       //user.$delete();
-	  $scope.users.splice(index, 1);
+      $scope.users.splice(index, 1);
     };
 
     $scope.add = function () {
