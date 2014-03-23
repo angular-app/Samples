@@ -53,8 +53,8 @@ angular.module('arrayFilters', [])
       }
     });
 
-	$scope.criteria = '';
-	$scope.pageNo = 0;
+    $scope.criteria = '';
+    $scope.pageNo = 0;
 
     $scope.setActivePage = function (pageNo) {
       if (pageNo >=0 && pageNo < $scope.pages.length) {
